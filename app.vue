@@ -260,20 +260,45 @@ onUnmounted(() => {
 })
 
 // Navbar linklerine tıklayınca yumuşak ve kontrollü scroll
+
+
 function scrollToSection(event, selector) {
   event.preventDefault()
-  const element = document.querySelector(selector)
-  if (!element) return
 
-  const headerOffset = document.querySelector('header').offsetHeight
-  const elementPosition = element.offsetTop
-  const offsetPosition = elementPosition - headerOffset
+  if (menuOpen.value) {
+    // Menü açıksa önce kapat
+    menuOpen.value = false
 
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'smooth'
-  })
+    // Menü animasyonu tamamlanınca scroll yap
+    setTimeout(() => {
+      const element = document.querySelector(selector)
+      if (!element) return
+
+      const headerOffset = document.querySelector('header').offsetHeight
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+    }, 350) // menünün kapanma animasyon süresi kadar beklet
+  } else {
+    // Menü kapalıysa hemen scroll yap
+    const element = document.querySelector(selector)
+    if (!element) return
+
+    const headerOffset = document.querySelector('header').offsetHeight
+    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+    const offsetPosition = elementPosition - headerOffset
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    })
+  }
 }
+
 
 const menuOpen = ref(false)
 
@@ -300,9 +325,9 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     <header :style="{ backgroundColor: navbarBgColor }"
       class="fixed top-0 left-0 w-full z-40 transition-colors duration-300">
       <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:p-6">
-        <h1 class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none"
+        <h1 class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none cursor-pointer"
           :style="{ color: navbarTextColorComputed }">
-          Döşemeci
+          <a href="#top" @click="scrollToSection($event, '#top')" class="hover:opacity-80 transition">Döşemeci</a>
         </h1>
 
         <!-- Hamburger Button -->
@@ -339,32 +364,45 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
       <nav v-if="menuOpen" class="md:hidden" :style="{ backgroundColor: navbarBgColor }">
         <ul :style="{ color: navbarTextColorComputed }"
           class="flex flex-col space-y-4 p-4 font-medium transition-colors duration-300">
-          <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda'); menuOpen = false"
+          <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda')"
               class="hover:opacity-70 transition">Hakkımızda</a></li>
-          <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler'); menuOpen = false"
+          <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')"
               class="hover:opacity-70 transition">Hizmetler</a></li>
-          <li><a href="#projeler" @click="scrollToSection($event, '#projeler'); menuOpen = false"
+          <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
               class="hover:opacity-70 transition">Projeler</a></li>
-          <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar'); menuOpen = false"
+          <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
               class="hover:opacity-70 transition">Referanslar</a></li>
-          <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar'); menuOpen = false"
+          <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
               class="hover:opacity-70 transition">Yorumlar</a></li>
-          <li><a href="#sss" @click="scrollToSection($event, '#sss'); menuOpen = false"
-              class="hover:opacity-70 transition">Sık Sorulanlar</a></li>
-          <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim'); menuOpen = false"
+          <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
+              Sorulanlar</a></li>
+          <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
               class="hover:opacity-70 transition">İletişim</a></li>
         </ul>
       </nav>
     </header>
 
-    <!-- Hero -->
-    <section data-color="#0D1F23" class="pt-28 h-[110vh] bg-center bg-cover bg-no-repeat"
-      style="background-image: url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1470&q=80');">
+    <!-- hero -->
+    <section id="top" data-color="#0D1F23" class="relative pt-28 h-[110vh] bg-center bg-cover bg-no-repeat"
+      style="background-image: url('/hero.png');">
+
+      <!-- Sol alt butonlar -->
+      <div class="absolute left-6 bottom-48 flex space-x-4 z-10
+           md:left-4 md:space-x-6">
+        <a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')" class="bg-[#B58863] text-white px-6 py-4 rounded-lg font-semibold hover:bg-[#a0774d] transition shadow-lg
+             md:px-8 md:py-5 md:text-lg">
+          Hizmetlerimiz
+        </a>
+        <a href="#iletisim" @click="scrollToSection($event, '#iletisim')" class="bg-[#132E35] text-[#B58863] px-6 py-4 rounded-lg font-semibold border border-[#B58863] hover:bg-[#B58863] hover:text-white transition shadow-lg
+             md:px-8 md:py-5 md:text-lg">
+          İletişime Geçin
+        </a>
+      </div>
     </section>
 
     <!-- Hakkımızda -->
-    <section id="hakkimizda" data-color="#0D1F23"
-      class="flex flex-col justify-center items-center min-h-screen px-6 text-center bg-gradient-to-b from-[#0D1F23] to-[#162A2F] text-[#AFB3B7]">
+    <section id="hakkimizda" data-color="#0D1F23" class="flex flex-col justify-center items-center min-h-screen px-6 text-center bg-gradient-to-b from-[#0D1F23] to-[#162A2F] text-[#AFB3B7]
+         pt-24 pb-24 sm:pt-0 sm:pb-0">
 
       <h3
         class="text-4xl md:text-5xl font-bold mb-6 tracking-tight relative text-transparent bg-clip-text bg-gradient-to-r from-[#B58863] to-[#d3a87c]">
@@ -609,7 +647,8 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     </section>
 
     <!-- Referanslar -->
-    <section id="referanslar" class="bg-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col items-center justify-center">
+    <section id="referanslar" data-color="#AFB3B7"
+      class="bg-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col items-center justify-center">
       <div class="max-w-7xl w-full">
         <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 text-[#132E35] select-none text-center">
           Referanslarımız
@@ -697,7 +736,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
     <!-- Sıkça Sorulan Sorular -->
     <section id="sss" data-color="#698180"
-      class="bg-[#698180] text-[#0D1F23] px-6 flex flex-col items-center pt-24 min-h-screen">
+      class="bg-[#698180] text-[#0D1F23] px-6 flex flex-col items-center min-h-screen pt-24 pb-24 sm:pb-0">
       <h3 class="text-5xl font-extrabold mb-16 select-none">Sıkça Sorulan Sorular</h3>
       <div class="max-w-4xl w-full space-y-6">
         <div v-for="(faq, index) in faqs" :key="index" class="bg-[#AFB3B7] rounded-xl p-6 cursor-pointer select-none"
@@ -717,123 +756,101 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
 
     <!-- İletişim -->
- <section
-  id="iletisim"
-  data-color="#0D1F23"
-  class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-4 min-h-screen flex flex-col justify-center items-center"
->
-  <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 select-none text-center">İletişim</h3>
+    <section id="iletisim" data-color="#0D1F23"
+      class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-4 min-h-screen flex flex-col justify-center items-center">
+      <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 select-none text-center">İletişim</h3>
 
-  <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
 
-    <!-- Bilgi Kartı -->
-    <div
-      class="bg-[#132E35] rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col justify-center space-y-10
+        <!-- Bilgi Kartı -->
+        <div class="bg-[#132E35] rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col justify-center space-y-10
              border border-[#B58863]/30 hover:border-[#B58863] hover:shadow-[0_10px_20px_rgba(181,136,99,0.5)]
-             transform transition duration-500 ease-in-out hover:scale-[1.03] cursor-default"
-    >
-      <div class="flex items-center space-x-6 sm:space-x-8">
-        <h4
-          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
-        >
-          Adres
-        </h4>
-        <p class="text-base sm:text-lg leading-relaxed max-w-md">
-          Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye
-        </p>
-      </div>
+             transform transition duration-500 ease-in-out hover:scale-[1.03] cursor-default">
+          <div class="flex items-center space-x-6 sm:space-x-8">
+            <h4
+              class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
+              Adres
+            </h4>
+            <p class="text-base sm:text-lg leading-relaxed max-w-md">
+              Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye
+            </p>
+          </div>
 
-      <div class="flex items-center space-x-6 sm:space-x-8">
-        <h4
-          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
-        >
-          Telefon
-        </h4>
-        <a
-          href="tel:+905551234567"
-          class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
+          <div class="flex items-center space-x-6 sm:space-x-8">
+            <h4
+              class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
+              Telefon
+            </h4>
+            <a href="tel:+905551234567" class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
                  text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
-                 transition duration-300 ease-in-out text-sm sm:text-base"
-        >
-          +90 555 123 45 67
-        </a>
-      </div>
+                 transition duration-300 ease-in-out text-sm sm:text-base">
+              +90 555 123 45 67
+            </a>
+          </div>
 
-      <div class="flex items-center space-x-6 sm:space-x-8">
-        <h4
-          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
-        >
-          E-posta
-        </h4>
-        <a
-          href="mailto:info@dosemeci.com.tr"
-          class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
+          <div class="flex items-center space-x-6 sm:space-x-8">
+            <h4
+              class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
+              E-posta
+            </h4>
+            <a href="mailto:info@dosemeci.com.tr" class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
                  text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
-                 transition duration-300 ease-in-out text-sm sm:text-base"
-        >
-          info@dosemeci.com.tr
-        </a>
+                 transition duration-300 ease-in-out text-sm sm:text-base">
+              info@dosemeci.com.tr
+            </a>
+          </div>
+
+          <!-- WhatsApp Butonu -->
+          <div class="flex items-center space-x-6 sm:space-x-8">
+            <h4
+              class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
+              WhatsApp
+            </h4>
+            <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="inline-flex items-center mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E]
+         text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54]
+         transition duration-300 ease-in-out text-sm sm:text-base">
+
+              <!-- Kendi SVG ikonun -->
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"
+                class="mr-3">
+                <path
+                  d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z"
+                  fill="white" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z"
+                  fill="white" />
+              </svg>
+
+              Mesaj Gönder
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Harita -->
+        <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863]
+             transition-colors duration-400 mt-14 md:mt-0 min-h-[300px] md:min-h-[350px]">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
+            width="100%" height="100%" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
       </div>
-
-      <!-- WhatsApp Butonu -->
-      <div class="flex items-center space-x-6 sm:space-x-8">
-        <h4
-          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
-        >
-          WhatsApp
-        </h4>
-        <a
-          href="https://wa.me/905551234567"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E]
-                 text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54]
-                 transition duration-300 ease-in-out text-sm sm:text-base"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-5 w-5 mr-3"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z"
-            />
-          </svg>
-          Mesaj Gönder
-        </a>
-      </div>
-    </div>
-
-    <!-- Harita -->
-    <div
-      class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863]
-             transition-colors duration-400 mt-14 md:mt-0 min-h-[300px] md:min-h-[350px]"
-    >
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
-        width="100%"
-        height="100%"
-        class="w-full h-full"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      ></iframe>
-    </div>
-  </div>
-</section>
-
-
+    </section>
 
     <!-- WhatsApp Sabit Buton -->
-    <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E] 
-          text-white p-4 rounded-full shadow-lg flex items-center justify-center
-          hover:from-[#128C7E] hover:to-[#075E54] transition duration-300" aria-label="WhatsApp ile mesaj gönder">
+    <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E]
+         text-white p-4 rounded-full shadow-lg flex items-center justify-center
+         hover:from-[#128C7E] hover:to-[#075E54] transition duration-300" aria-label="WhatsApp ile mesaj gönder">
 
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+      <!-- Kendi SVG ikonun -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
-          d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
+          d="M6.014 8.00613C6.12827 7.1024 7.30277 5.87414 8.23488 6.01043L8.23339 6.00894C9.14051 6.18132 9.85859 7.74261 10.2635 8.44465C10.5504 8.95402 10.3641 9.4701 10.0965 9.68787C9.7355 9.97883 9.17099 10.3803 9.28943 10.7834C9.5 11.5 12 14 13.2296 14.7107C13.695 14.9797 14.0325 14.2702 14.3207 13.9067C14.5301 13.6271 15.0466 13.46 15.5548 13.736C16.3138 14.178 17.0288 14.6917 17.69 15.27C18.0202 15.546 18.0977 15.9539 17.8689 16.385C17.4659 17.1443 16.3003 18.1456 15.4542 17.9421C13.9764 17.5868 8 15.27 6.08033 8.55801C5.97237 8.24048 5.99955 8.12044 6.014 8.00613Z"
+          fill="white" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M12 23C10.7764 23 10.0994 22.8687 9 22.5L6.89443 23.5528C5.56462 24.2177 4 23.2507 4 21.7639V19.5C1.84655 17.492 1 15.1767 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23ZM6 18.6303L5.36395 18.0372C3.69087 16.4772 3 14.7331 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C11.0143 21 10.552 20.911 9.63595 20.6038L8.84847 20.3397L6 21.7639V18.6303Z"
+          fill="white" />
       </svg>
     </a>
 
@@ -872,5 +889,15 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
   border-radius: 1rem;
   border-style: solid;
   border-image-repeat: stretch;
+}
+
+@media (max-width: 640px) {
+  #top {
+    background-position: calc(100% + 200px) center !important;
+  }
+
+  #top>div.absolute {
+    bottom: 240px !important;
+  }
 }
 </style>
