@@ -22,17 +22,52 @@ function toggleFaq(index) {
 }
 
 const testimonials = ref([
-  { name: "Ahmet Yılmaz", comment: "Koltuklarımızı yepyeni yaptılar, çok memnun kaldık.", image: "https://randomuser.me/api/portraits/men/32.jpg" },
-  { name: "Ayşe Demir", comment: "Hızlı teslimat ve uygun fiyat, kesinlikle tavsiye ederim.", image: "https://randomuser.me/api/portraits/women/44.jpg" },
-  { name: "Mehmet Can", comment: "Döşeme işinde çok iyiler, salonumuz harika oldu.", image: "https://randomuser.me/api/portraits/men/65.jpg" },
+  {
+    name: "Ahmet Yılmaz",
+    comment: "Koltuklarımızı yepyeni yaptılar, çok memnun kaldık. İşçilik ve hizmet çok iyi.",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    rating: 5,
+  },
+  {
+    name: "Ayşe Demir",
+    comment: "Hızlı teslimat ve uygun fiyat, kesinlikle tavsiye ederim. Çok kaliteli işler.",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    rating: 4,
+  },
+  {
+    name: "Mehmet Can",
+    comment: "Döşeme işinde çok iyiler, salonumuz harika oldu. İlgileri çok iyiydi.",
+    image: "https://randomuser.me/api/portraits/men/65.jpg",
+    rating: 5,
+  },
+  {
+    name: "Elif Karaca",
+    comment: "Kumaş seçimi çok zengin, hizmet hızlı ve çok profesyonelce. Çok teşekkür ederim.",
+    image: "https://randomuser.me/api/portraits/women/68.jpg",
+    rating: 5,
+  },
+  {
+    name: "Serkan Yıldız",
+    comment: "Çok memnun kaldım, fiyat performans açısından harika bir ekip.",
+    image: "https://randomuser.me/api/portraits/men/76.jpg",
+    rating: 4,
+  },
+  {
+    name: "Derya Çelik",
+    comment: "Evime gelen hizmeti çok beğendim, çok nazik ve ilgili çalışanlar var.",
+    image: "https://randomuser.me/api/portraits/women/52.jpg",
+    rating: 5,
+  },
 ])
+
 
 const faqs = ref([
   { q: "Hangi malzemeleri kullanıyorsunuz?", a: "Sadece kaliteli ve dayanıklı kumaş ve sünger kullanıyoruz." },
   { q: "Teslim süresi ne kadar?", a: "Genellikle 5-7 iş günü içerisinde teslim ediyoruz." },
   { q: "Nakliye hizmetiniz var mı?", a: "Evet, şehir içi ücretsiz nakliye hizmetimiz mevcuttur." },
   { q: "Fiyatlandırma nasıl yapılıyor?", a: "Ürün modeline ve kumaş seçimine göre fiyat belirlenir." },
-  { q: "Kumaş seçenekleri sunuyor musunuz?", a: "Evet, geniş bir kumaş kataloğumuz bulunmaktadır." }
+  { q: "Özel tasarım ürün siparişi verebilir miyim?", a: "Evet, özel tasarım talepleriniz için bizimle iletişime geçebilirsiniz. Size özel çözümler sunuyoruz." },
+  { q: "Ödeme seçenekleriniz nelerdir?", a: "Kredi kartı, banka havalesi ve kapıda ödeme seçeneklerimiz mevcuttur." }
 ])
 
 const projects = ref([
@@ -110,12 +145,22 @@ const references = ref([
 const scrollContainer = ref(null)
 let animationFrameId = null
 
+// Otomatik scroll için kontrol değişkenleri
+let autoScrollPaused = false
+let pauseTimeoutId = null
+
 function scrollStep() {
   if (!scrollContainer.value) return
-  scrollContainer.value.scrollLeft += 1
-  if (scrollContainer.value.scrollLeft >= scrollContainer.value.scrollWidth / 2) {
-    scrollContainer.value.scrollLeft = 0
+
+  if (!autoScrollPaused) {
+    scrollContainer.value.scrollLeft += 1
+
+    // scroll container'ın yarısına gelince başa dön
+    if (scrollContainer.value.scrollLeft >= scrollContainer.value.scrollWidth / 0) {
+      scrollContainer.value.scrollLeft = 0
+    }
   }
+
   animationFrameId = requestAnimationFrame(scrollStep)
 }
 
@@ -128,14 +173,26 @@ onUnmounted(() => {
   if (animationFrameId) cancelAnimationFrame(animationFrameId)
 })
 
+// Butonlara tıklanınca otomatik scroll'u 3 saniye durdur
+function pauseAutoScrollTemporarily() {
+  autoScrollPaused = true
+  if (pauseTimeoutId) clearTimeout(pauseTimeoutId)
+
+  pauseTimeoutId = setTimeout(() => {
+    autoScrollPaused = false
+  }, 3000) // 3 saniye sonra tekrar otomatik devam
+}
+
 function scrollLeft() {
   if (scrollContainer.value) {
+    pauseAutoScrollTemporarily()
     scrollContainer.value.scrollBy({ left: -300, behavior: 'smooth' })
   }
 }
 
 function scrollRight() {
   if (scrollContainer.value) {
+    pauseAutoScrollTemporarily()
     scrollContainer.value.scrollBy({ left: 300, behavior: 'smooth' })
   }
 }
@@ -243,6 +300,8 @@ function scrollToSection(event, selector) {
             </li>
             <li><a href="#yorumlar" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
                 @click="scrollToSection($event, '#yorumlar')">Yorumlar</a></li>
+            <li><a href="#sss" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
+                @click="scrollToSection($event, '#sss')">Sık Sorulanlar</a></li>
             <li><a href="#iletisim" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
                 @click="scrollToSection($event, '#iletisim')">İletişim</a></li>
           </ul>
@@ -501,38 +560,50 @@ function scrollToSection(event, selector) {
 
     </section>
 
-
     <!-- Referanslar -->
     <section id="referanslar" data-color="#AFB3B7"
       class="bg-[#AFB3B7] flex flex-col items-center justify-center min-h-screen py-24 px-6">
       <div class="max-w-7xl w-full">
         <h3 class="text-5xl font-extrabold mb-12 text-[#132E35] select-none text-center w-full">Referanslarımız</h3>
         <div class="relative flex items-center overflow-hidden">
-          <button @click="scrollLeft" aria-label="Sol Kaydır"
-            class="absolute left-0 z-20 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center hover:bg-[#B58863] hover:text-[#132E35] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+
+          <!-- Sol Kaydırma Butonu -->
+          <button @click="scrollLeft" aria-label="Sol Kaydır" class="absolute left-2 md:left-4 z-30 bg-[#132E35] text-[#B58863] rounded-full w-12 h-12 flex items-center justify-center shadow-lg
+               hover:bg-[#B58863] hover:text-[#132E35] transition duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-          <div ref="scrollContainer" class="overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap py-4 w-full"
+
+          <!-- Scroll Container -->
+          <div ref="scrollContainer" class="overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap py-6 w-full"
             style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none;">
+
+            <!-- İlk Referans Listesi -->
             <div class="inline-flex space-x-8">
-              <div v-for="(refItem, idx) in references" :key="'ref1-' + idx" class="inline-block">
-                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-xl object-cover shadow-lg"
-                  tabindex="0" aria-label="Referans {{ refItem.name }}" />
+              <div v-for="(refItem, idx) in references" :key="'ref1-' + idx" class="inline-block group cursor-pointer">
+                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-2xl object-cover shadow-xl transform transition duration-300
+                        group-hover:scale-105 group-hover:shadow-2xl" tabindex="0"
+                  :aria-label="'Referans ' + refItem.name" />
               </div>
             </div>
-            <div class="inline-flex space-x-8">
-              <div v-for="(refItem, idx) in references" :key="'ref2-' + idx" class="inline-block">
-                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-xl object-cover shadow-lg"
-                  tabindex="0" aria-label="Referans {{ refItem.name }}" />
+
+            <!-- İkinci Referans Listesi, başında boşluk var -->
+            <div class="inline-flex space-x-8" style="padding-left: 4rem;">
+              <div v-for="(refItem, idx) in references" :key="'ref2-' + idx" class="inline-block group cursor-pointer">
+                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-2xl object-cover shadow-xl transform transition duration-300
+                        group-hover:scale-105 group-hover:shadow-2xl" tabindex="0"
+                  :aria-label="'Referans ' + refItem.name" />
               </div>
             </div>
+
           </div>
-          <button @click="scrollRight" aria-label="Sağ Kaydır"
-            class="absolute right-0 z-20 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center hover:bg-[#B58863] hover:text-[#132E35] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+
+          <!-- Sağ Kaydırma Butonu -->
+          <button @click="scrollRight" aria-label="Sağ Kaydır" class="absolute right-2 md:right-4 z-30 bg-[#132E35] text-[#B58863] rounded-full w-12 h-12 flex items-center justify-center shadow-lg
+               hover:bg-[#B58863] hover:text-[#132E35] transition duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
@@ -541,24 +612,54 @@ function scrollToSection(event, selector) {
       </div>
     </section>
 
+    <!-- Yorumlar -->
     <section id="yorumlar" data-color="#132E35"
-      class="bg-[#132E35] text-[#B58863] flex flex-col items-center justify-center min-h-screen py-24 px-6">
+      class="bg-[#132E35] text-[#D4C495] flex flex-col items-center justify-center min-h-screen py-24 px-6">
       <div class="max-w-7xl w-full">
-        <h3 class="text-5xl font-extrabold mb-16 select-none text-center w-full">Müşteri Yorumları</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-          <div v-for="(testimonial, index) in testimonials" :key="index"
-            class="bg-[#0D1F23] rounded-lg p-6 flex flex-col items-center text-center shadow-lg max-w-md mx-auto">
-            <img :src="testimonial.image" :alt="testimonial.name" class="w-24 h-24 rounded-full mb-4 object-cover" />
-            <p class="mb-4 text-lg italic">&quot;{{ testimonial.comment }}&quot;</p>
-            <h4 class="text-[#B58863] font-semibold">{{ testimonial.name }}</h4>
+        <h3 class="text-4xl font-extrabold mb-12 select-none text-center tracking-wide text-[#B58863]">Müşteri Yorumları
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div v-for="(testimonial, index) in testimonials" :key="index" class="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#B58863]/30 shadow-lg shadow-black/30
+         transition duration-500 ease-in-out
+         hover:scale-105 hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]
+         max-w-xs p-5 flex flex-col items-center text-center mx-auto">
+
+            <!-- Profil Fotoğrafı -->
+            <img :src="testimonial.image" :alt="testimonial.name"
+              class="w-20 h-20 rounded-full object-cover border-2 border-[#B58863] mb-4 shadow-sm" />
+
+            <!-- Yorum Metni -->
+            <p class="text-[#D4C495] italic text-sm leading-relaxed mb-5 font-serif select-text">&quot;{{
+              testimonial.comment }}&quot;</p>
+
+            <!-- Yıldız Puan -->
+            <div class="flex justify-center space-x-1 mb-3">
+              <template v-for="starIndex in 5" :key="starIndex">
+                <svg v-if="starIndex <= testimonial.rating" xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 text-[#B58863]" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
+                </svg>
+                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#7a6f44]" fill="currentColor"
+                  viewBox="0 0 20 20">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
+                </svg>
+              </template>
+            </div>
+
+            <!-- İsim -->
+            <h4 class="text-[#B58863] font-semibold text-base tracking-wide select-text">{{ testimonial.name }}</h4>
           </div>
+
         </div>
       </div>
     </section>
 
-
     <!-- Sıkça Sorulan Sorular -->
-    <section id="sss" data-color="#698180" class="bg-[#698180] text-[#0D1F23] py-24 px-6 flex flex-col items-center">
+    <section id="sss" data-color="#698180"
+      class="bg-[#698180] text-[#0D1F23] px-6 flex flex-col items-center pt-24 min-h-screen">
       <h3 class="text-5xl font-extrabold mb-16 select-none">Sıkça Sorulan Sorular</h3>
       <div class="max-w-4xl w-full space-y-6">
         <div v-for="(faq, index) in faqs" :key="index" class="bg-[#AFB3B7] rounded-xl p-6 cursor-pointer select-none"
@@ -576,28 +677,89 @@ function scrollToSection(event, selector) {
       </div>
     </section>
 
+
     <!-- İletişim -->
-    <section id="iletisim" data-color="#0D1F23"
-      class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-6 flex flex-col items-center min-h-[500px]">
-      <h3 class="text-5xl font-extrabold mb-10 select-none">İletişim</h3>
-      <div class="max-w-5xl w-full grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-          <h4 class="text-2xl mb-4 font-semibold">Adres</h4>
-          <p>Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye</p>
-          <h4 class="text-2xl mt-8 mb-4 font-semibold">Telefon</h4>
-          <p>+90 555 123 45 67</p>
-          <h4 class="text-2xl mt-8 mb-4 font-semibold">E-posta</h4>
-          <p>info@dosemeci.com.tr</p>
-        </div>
-        <div>
-          <h4 class="text-2xl mb-4 font-semibold">Harita</h4>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+<section id="iletisim" data-color="#0D1F23"
+  class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col justify-center items-center">
+
+  <h3 class="text-5xl font-extrabold mb-16 select-none text-center">İletişim</h3>
+
+  <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-14 px-4">
+
+    <!-- Bilgi Kartı -->
+    <div
+      class="bg-[#132E35] rounded-3xl p-12 shadow-2xl flex flex-col justify-center space-y-12
+             border border-[#B58863]/30 hover:border-[#B58863] hover:shadow-[0_10px_20px_rgba(181,136,99,0.5)]
+             transform transition duration-500 ease-in-out hover:scale-[1.03] cursor-default">
+
+      <div class="flex items-center space-x-8">
+        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">Adres</h4>
+        <p class="text-lg leading-relaxed max-w-md">Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye</p>
       </div>
-    </section>
+
+      <div class="flex items-center space-x-8">
+        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">Telefon</h4>
+        <a href="tel:+905551234567"
+          class="inline-block mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45] 
+                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734] 
+                 transition duration-300 ease-in-out">
+          +90 555 123 45 67
+        </a>
+      </div>
+
+      <div class="flex items-center space-x-8">
+        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">E-posta</h4>
+        <a href="mailto:info@dosemeci.com.tr"
+          class="inline-block mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45] 
+                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734] 
+                 transition duration-300 ease-in-out">
+          info@dosemeci.com.tr
+        </a>
+      </div>
+
+      <!-- WhatsApp Butonu -->
+      <div class="flex items-center space-x-8">
+        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">WhatsApp</h4>
+        <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer"
+          class="inline-flex items-center mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] 
+                 text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54] 
+                 transition duration-300 ease-in-out">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
+          </svg>
+          Mesaj Gönder
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Harita -->
+    <div
+      class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863] 
+             transition-colors duration-400 min-h-[350px]">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
+        width="100%" height="100%" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- WhatsApp Sabit Buton -->
+<a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer"
+   class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E] 
+          text-white p-4 rounded-full shadow-lg flex items-center justify-center
+          hover:from-[#128C7E] hover:to-[#075E54] transition duration-300"
+   aria-label="WhatsApp ile mesaj gönder">
+
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
+  </svg>
+</a>
+
 
     <!-- Footer -->
     <footer class="bg-[#132E35] text-[#B58863] py-10 flex flex-col items-center justify-center">
