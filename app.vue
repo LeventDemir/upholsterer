@@ -274,6 +274,23 @@ function scrollToSection(event, selector) {
     behavior: 'smooth'
   })
 }
+
+const menuOpen = ref(false)
+
+// Zıt renk hesaplayıcı fonksiyon
+function getContrastColor(hexcolor) {
+  hexcolor = hexcolor.replace('#', '');
+  if (hexcolor.length === 3) {
+    hexcolor = hexcolor.split('').map(c => c + c).join('');
+  }
+  const r = parseInt(hexcolor.substr(0, 2), 16);
+  const g = parseInt(hexcolor.substr(2, 2), 16);
+  const b = parseInt(hexcolor.substr(4, 2), 16);
+  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  return brightness > 125 ? '#000000' : '#FFFFFF';
+}
+
+const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.value))
 </script>
 
 <template>
@@ -282,31 +299,62 @@ function scrollToSection(event, selector) {
     <!-- Navbar -->
     <header :style="{ backgroundColor: navbarBgColor }"
       class="fixed top-0 left-0 w-full z-40 transition-colors duration-300">
-      <div class="max-w-6xl mx-auto flex justify-between items-center p-6">
-        <h1 class="text-2xl font-extrabold transition-colors duration-300" :style="{ color: navbarTextColorPrimary }">
+      <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:p-6">
+        <h1 class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none"
+          :style="{ color: navbarTextColorComputed }">
           Döşemeci
         </h1>
-        <nav>
-          <ul :style="{ color: navbarTextColorPrimary }"
-            class="flex space-x-8 font-medium transition-colors duration-300">
-            <li><a href="#hakkimizda" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#hakkimizda')">Hakkımızda</a></li>
-            <li><a href="#hizmetler" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#hizmetler')">Hizmetler</a></li>
-            <li><a href="#projeler" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#projeler')">Projeler</a></li>
-            <li><a href="#referanslar" :style="{ color: navbarTextColorPrimary }"
-                class="hover:text-[#5A636A] transition" @click="scrollToSection($event, '#referanslar')">Referanslar</a>
-            </li>
-            <li><a href="#yorumlar" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#yorumlar')">Yorumlar</a></li>
-            <li><a href="#sss" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#sss')">Sık Sorulanlar</a></li>
-            <li><a href="#iletisim" :style="{ color: navbarTextColorPrimary }" class="hover:text-[#5A636A] transition"
-                @click="scrollToSection($event, '#iletisim')">İletişim</a></li>
+
+        <!-- Hamburger Button -->
+        <button @click="menuOpen = !menuOpen" class="md:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            :style="{ color: navbarTextColorComputed }">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <!-- Desktop Menu -->
+        <nav class="hidden md:block">
+          <ul :style="{ color: navbarTextColorComputed }"
+            class="flex space-x-6 font-medium transition-colors duration-300">
+            <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda')"
+                class="hover:opacity-70 transition">Hakkımızda</a></li>
+            <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')"
+                class="hover:opacity-70 transition">Hizmetler</a></li>
+            <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
+                class="hover:opacity-70 transition">Projeler</a></li>
+            <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
+                class="hover:opacity-70 transition">Referanslar</a></li>
+            <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
+                class="hover:opacity-70 transition">Yorumlar</a></li>
+            <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
+                Sorulanlar</a></li>
+            <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
+                class="hover:opacity-70 transition">İletişim</a></li>
           </ul>
         </nav>
       </div>
+
+      <!-- Mobile Menu -->
+      <nav v-if="menuOpen" class="md:hidden" :style="{ backgroundColor: navbarBgColor }">
+        <ul :style="{ color: navbarTextColorComputed }"
+          class="flex flex-col space-y-4 p-4 font-medium transition-colors duration-300">
+          <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda'); menuOpen = false"
+              class="hover:opacity-70 transition">Hakkımızda</a></li>
+          <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler'); menuOpen = false"
+              class="hover:opacity-70 transition">Hizmetler</a></li>
+          <li><a href="#projeler" @click="scrollToSection($event, '#projeler'); menuOpen = false"
+              class="hover:opacity-70 transition">Projeler</a></li>
+          <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar'); menuOpen = false"
+              class="hover:opacity-70 transition">Referanslar</a></li>
+          <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar'); menuOpen = false"
+              class="hover:opacity-70 transition">Yorumlar</a></li>
+          <li><a href="#sss" @click="scrollToSection($event, '#sss'); menuOpen = false"
+              class="hover:opacity-70 transition">Sık Sorulanlar</a></li>
+          <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim'); menuOpen = false"
+              class="hover:opacity-70 transition">İletişim</a></li>
+        </ul>
+      </nav>
     </header>
 
     <!-- Hero -->
@@ -561,53 +609,43 @@ function scrollToSection(event, selector) {
     </section>
 
     <!-- Referanslar -->
-    <section id="referanslar" data-color="#AFB3B7"
-      class="bg-[#AFB3B7] flex flex-col items-center justify-center min-h-screen py-24 px-6">
+    <section id="referanslar" class="bg-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col items-center justify-center">
       <div class="max-w-7xl w-full">
-        <h3 class="text-5xl font-extrabold mb-12 text-[#132E35] select-none text-center w-full">Referanslarımız</h3>
-        <div class="relative flex items-center overflow-hidden">
+        <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 text-[#132E35] select-none text-center">
+          Referanslarımız
+        </h3>
+
+        <div class="relative">
+
+          <!-- Scrollable Container -->
+          <div ref="scrollContainer" class="overflow-x-auto scroll-smooth no-scrollbar py-6" tabindex="0">
+            <div class="flex space-x-6">
+              <div v-for="(ref, idx) in references" :key="idx"
+                class="flex-shrink-0 w-40 sm:w-48 md:w-52 rounded-2xl shadow-lg overflow-hidden cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+                role="img" :aria-label="'Referans ' + ref.name" tabindex="0">
+                <img :src="ref.image" :alt="ref.name" class="w-full h-full object-cover" loading="lazy" />
+              </div>
+            </div>
+          </div>
 
           <!-- Sol Kaydırma Butonu -->
-          <button @click="scrollLeft" aria-label="Sol Kaydır" class="absolute left-2 md:left-4 z-30 bg-[#132E35] text-[#B58863] rounded-full w-12 h-12 flex items-center justify-center shadow-lg
-               hover:bg-[#B58863] hover:text-[#132E35] transition duration-300 ease-in-out">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+          <button @click="scrollLeft" aria-label="Sol Kaydır"
+            class="absolute top-1/2 left-2 -translate-y-1/2 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[#B58863] hover:text-[#132E35] transition z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
-          <!-- Scroll Container -->
-          <div ref="scrollContainer" class="overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap py-6 w-full"
-            style="scroll-behavior: smooth; scrollbar-width: none; -ms-overflow-style: none;">
-
-            <!-- İlk Referans Listesi -->
-            <div class="inline-flex space-x-8">
-              <div v-for="(refItem, idx) in references" :key="'ref1-' + idx" class="inline-block group cursor-pointer">
-                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-2xl object-cover shadow-xl transform transition duration-300
-                        group-hover:scale-105 group-hover:shadow-2xl" tabindex="0"
-                  :aria-label="'Referans ' + refItem.name" />
-              </div>
-            </div>
-
-            <!-- İkinci Referans Listesi, başında boşluk var -->
-            <div class="inline-flex space-x-8" style="padding-left: 4rem;">
-              <div v-for="(refItem, idx) in references" :key="'ref2-' + idx" class="inline-block group cursor-pointer">
-                <img :src="refItem.image" :alt="refItem.name" class="w-48 h-48 rounded-2xl object-cover shadow-xl transform transition duration-300
-                        group-hover:scale-105 group-hover:shadow-2xl" tabindex="0"
-                  :aria-label="'Referans ' + refItem.name" />
-              </div>
-            </div>
-
-          </div>
-
           <!-- Sağ Kaydırma Butonu -->
-          <button @click="scrollRight" aria-label="Sağ Kaydır" class="absolute right-2 md:right-4 z-30 bg-[#132E35] text-[#B58863] rounded-full w-12 h-12 flex items-center justify-center shadow-lg
-               hover:bg-[#B58863] hover:text-[#132E35] transition duration-300 ease-in-out">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+          <button @click="scrollRight" aria-label="Sağ Kaydır"
+            class="absolute top-1/2 right-2 -translate-y-1/2 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[#B58863] hover:text-[#132E35] transition z-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
+
         </div>
       </div>
     </section>
@@ -679,86 +717,125 @@ function scrollToSection(event, selector) {
 
 
     <!-- İletişim -->
-<section id="iletisim" data-color="#0D1F23"
-  class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col justify-center items-center">
+ <section
+  id="iletisim"
+  data-color="#0D1F23"
+  class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-4 min-h-screen flex flex-col justify-center items-center"
+>
+  <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 select-none text-center">İletişim</h3>
 
-  <h3 class="text-5xl font-extrabold mb-16 select-none text-center">İletişim</h3>
-
-  <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-14 px-4">
+  <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <!-- Bilgi Kartı -->
     <div
-      class="bg-[#132E35] rounded-3xl p-12 shadow-2xl flex flex-col justify-center space-y-12
+      class="bg-[#132E35] rounded-3xl p-8 sm:p-12 shadow-2xl flex flex-col justify-center space-y-10
              border border-[#B58863]/30 hover:border-[#B58863] hover:shadow-[0_10px_20px_rgba(181,136,99,0.5)]
-             transform transition duration-500 ease-in-out hover:scale-[1.03] cursor-default">
-
-      <div class="flex items-center space-x-8">
-        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">Adres</h4>
-        <p class="text-lg leading-relaxed max-w-md">Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye</p>
+             transform transition duration-500 ease-in-out hover:scale-[1.03] cursor-default"
+    >
+      <div class="flex items-center space-x-6 sm:space-x-8">
+        <h4
+          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
+        >
+          Adres
+        </h4>
+        <p class="text-base sm:text-lg leading-relaxed max-w-md">
+          Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye
+        </p>
       </div>
 
-      <div class="flex items-center space-x-8">
-        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">Telefon</h4>
-        <a href="tel:+905551234567"
-          class="inline-block mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45] 
-                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734] 
-                 transition duration-300 ease-in-out">
+      <div class="flex items-center space-x-6 sm:space-x-8">
+        <h4
+          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
+        >
+          Telefon
+        </h4>
+        <a
+          href="tel:+905551234567"
+          class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
+                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
+                 transition duration-300 ease-in-out text-sm sm:text-base"
+        >
           +90 555 123 45 67
         </a>
       </div>
 
-      <div class="flex items-center space-x-8">
-        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">E-posta</h4>
-        <a href="mailto:info@dosemeci.com.tr"
-          class="inline-block mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45] 
-                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734] 
-                 transition duration-300 ease-in-out">
+      <div class="flex items-center space-x-6 sm:space-x-8">
+        <h4
+          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
+        >
+          E-posta
+        </h4>
+        <a
+          href="mailto:info@dosemeci.com.tr"
+          class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
+                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
+                 transition duration-300 ease-in-out text-sm sm:text-base"
+        >
           info@dosemeci.com.tr
         </a>
       </div>
 
       <!-- WhatsApp Butonu -->
-      <div class="flex items-center space-x-8">
-        <h4 class="text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-40">WhatsApp</h4>
-        <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer"
-          class="inline-flex items-center mt-2 px-7 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] 
-                 text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54] 
-                 transition duration-300 ease-in-out">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+      <div class="flex items-center space-x-6 sm:space-x-8">
+        <h4
+          class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40"
+        >
+          WhatsApp
+        </h4>
+        <a
+          href="https://wa.me/905551234567"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E]
+                 text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54]
+                 transition duration-300 ease-in-out text-sm sm:text-base"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5 mr-3"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path
-              d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
+              d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z"
+            />
           </svg>
           Mesaj Gönder
         </a>
       </div>
-
     </div>
 
     <!-- Harita -->
     <div
-      class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863] 
-             transition-colors duration-400 min-h-[350px]">
+      class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863]
+             transition-colors duration-400 mt-14 md:mt-0 min-h-[300px] md:min-h-[350px]"
+    >
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
-        width="100%" height="100%" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"></iframe>
+        width="100%"
+        height="100%"
+        class="w-full h-full"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
     </div>
-
   </div>
 </section>
 
 
-<!-- WhatsApp Sabit Buton -->
-<a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer"
-   class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E] 
-          text-white p-4 rounded-full shadow-lg flex items-center justify-center
-          hover:from-[#128C7E] hover:to-[#075E54] transition duration-300"
-   aria-label="WhatsApp ile mesaj gönder">
 
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
-  </svg>
-</a>
+    <!-- WhatsApp Sabit Buton -->
+    <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E] 
+          text-white p-4 rounded-full shadow-lg flex items-center justify-center
+          hover:from-[#128C7E] hover:to-[#075E54] transition duration-300" aria-label="WhatsApp ile mesaj gönder">
+
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+        <path
+          d="M20.52 3.48a11.84 11.84 0 0 0-16.76 0 11.84 11.84 0 0 0-3.48 8.43c0 2.06.52 4.08 1.5 5.9L2 22l4.26-1.2a11.8 11.8 0 0 0 5.93 1.5h.01a11.84 11.84 0 0 0 8.43-3.48 11.87 11.87 0 0 0 3.48-8.44 11.86 11.86 0 0 0-3.49-8.43Zm-8.57 14.67a8.49 8.49 0 0 1-4.56-1.32l-.32-.2-3.04.86.81-3-.21-.31a8.52 8.52 0 0 1 1.24-11.52 8.51 8.51 0 0 1 12.02 0 8.49 8.49 0 0 1 1.23 11.53 8.48 8.48 0 0 1-8.93 2.95Z" />
+      </svg>
+    </a>
 
 
     <!-- Footer -->
