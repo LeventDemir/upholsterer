@@ -75,6 +75,26 @@ const projects = ref([
       'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80',
     category: 'Ofis',
   },
+  {
+    title: 'Modern Koltuk Döşeme',
+    description:
+      'Estetik ve dayanıklı kumaş kullanarak salonunuza modern dokunuşlar.',
+    image:
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80',
+    largeImage:
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1200&q=80',
+    category: 'Koltuk',
+  },
+  {
+    title: 'Cafe İçin Özel Döşeme',
+    description:
+      'Kafe ve ofis ortamları için dayanıklı, kolay temizlenebilir tasarımlar.',
+    image:
+      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=600&q=80',
+    largeImage:
+      'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80',
+    category: 'Cafe',
+  },
 ])
 
 const references = ref([
@@ -435,36 +455,52 @@ function scrollToSection(event, selector) {
       </div>
     </section>
 
-
-
-
-
-
-
     <!-- Projeler -->
     <section id="projeler" data-color="#132E35"
-      class="bg-[#132E35] text-[#B58863] min-h-screen py-24 px-6 flex flex-col justify-center items-center">
+      class="bg-[#132E35] text-[#B58863] min-h-screen py-24 px-4 sm:px-6 flex flex-col justify-center items-center">
+
       <h3 class="text-5xl font-extrabold mb-16 select-none">Projelerimiz</h3>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl w-full">
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl w-full">
 
         <div v-for="(project, index) in projects" :key="index"
-          class="cursor-pointer rounded-xl overflow-hidden relative group">
+          class="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#B58863]/30 shadow-lg shadow-black/30
+             transition-transform duration-500 ease-in-out
+             hover:scale-105 hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]">
+
+          <!-- Image -->
           <img :src="project.image" :alt="project.title" @click="openModal(project.largeImage)"
-            class="w-full h-56 object-cover rounded-xl transition-transform duration-300 group-hover:scale-105" />
+            class="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:rotate-1" />
+
+          <!-- Overlay -->
           <div
-            class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent rounded-b-xl text-white">
-            <h4 class="text-lg font-semibold">{{ project.title }}</h4>
-            <p class="text-sm mt-1">{{ project.description }}</p>
+            class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+            <div class="transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500">
+              <span
+                class="inline-block bg-[#B58863] text-[#132E35] text-xs font-semibold px-3 py-1 rounded-full mb-2 select-none">
+                {{ project.category || 'Kategori' }}
+              </span>
+              <h4 class="text-lg font-bold text-white">{{ project.title }}</h4>
+              <p class="text-sm text-white/80 mt-1 line-clamp-2">{{ project.description }}</p>
+              <button @click="openModal(project.largeImage)"
+                class="mt-3 bg-[#B58863] hover:bg-[#a67c4f] text-[#132E35] px-4 py-2 rounded-md font-semibold transition-transform transform hover:scale-105">
+                İncele
+              </button>
+            </div>
           </div>
         </div>
 
       </div>
+
       <div v-if="!allProjectsLoaded" class="mt-12 text-center">
-        <button @click="loadMoreProjects" class="bg-[#B58863] hover:bg-[#A67C4F] px-6 py-3 rounded-md font-semibold">
+        <button @click="loadMoreProjects"
+          class="bg-[#B58863] hover:bg-[#A67C4F] px-6 py-3 rounded-md font-semibold transition-transform transform hover:scale-105">
           Daha Fazla Yükle
         </button>
       </div>
+
     </section>
+
 
     <!-- Referanslar -->
     <section id="referanslar" data-color="#AFB3B7"
