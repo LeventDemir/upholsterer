@@ -348,10 +348,12 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
                 class="hover:opacity-70 transition">Hizmetler</a></li>
             <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
                 class="hover:opacity-70 transition">Projeler</a></li>
-            <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
-                class="hover:opacity-70 transition">Referanslar</a></li>
-            <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
-                class="hover:opacity-70 transition">Yorumlar</a></li>
+            <!--
+                  <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
+                    class="hover:opacity-70 transition">Referanslar</a></li>
+                    <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
+                      class="hover:opacity-70 transition">Yorumlar</a></li>
+                      -->
             <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
                 Sorulanlar</a></li>
             <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
@@ -370,10 +372,12 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
               class="hover:opacity-70 transition">Hizmetler</a></li>
           <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
               class="hover:opacity-70 transition">Projeler</a></li>
-          <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
-              class="hover:opacity-70 transition">Referanslar</a></li>
-          <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
-              class="hover:opacity-70 transition">Yorumlar</a></li>
+          <!--
+                <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
+                  class="hover:opacity-70 transition">Referanslar</a></li>
+                  <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
+                    class="hover:opacity-70 transition">Yorumlar</a></li>
+                    -->
           <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
               Sorulanlar</a></li>
           <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
@@ -412,7 +416,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
       <p class="max-w-3xl text-lg leading-relaxed mb-10 text-[#AFB3B7]">
         20 yıllık tecrübemizle müşteri memnuniyetini odakta tutuyor, estetik ve konforlu yaşam alanları yaratıyoruz.
-        Usta ekiplerimiz ile koltuk, sandalye, ofis ve cafe döşemelerinde modern çözümler sağlıyoruz.
+        Usta ekiplerimiz ile Yat, Tekne, Tır, Kamyan, Araba, koltuk, sandalye, ofis ve cafe vb. döşemelerinde modern çözümler sağlıyoruz.
         Her projede kaliteli malzeme, işçilik ve tasarımı bir araya getirerek, alanlarınızı uzun ömürlü, kullanışlı ve
         şık hale getiriyoruz.
         Yıllar içerisinde yüzlerce mutlu müşteri ve proje ile sektörde güvenilir bir marka haline geldik.
@@ -464,6 +468,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
       </div>
     </section>
 
+
     <!-- Hizmetlerimimz -->
     <section id="hizmetler" data-color="#698180"
       class="flex flex-col justify-center items-center min-h-screen px-6 bg-[#698180] text-[#0D1F23] py-24">
@@ -495,11 +500,11 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
           </div>
           <h4
             class="text-3xl font-bold mb-6 text-[#132E35] tracking-tight transition-colors duration-300 group-hover:text-[#B58863]">
-            Koltuk Döşeme
+            Yat - Tekne Döşeme
           </h4>
           <p class="text-[#0D1F23] text-lg mb-10 leading-relaxed max-w-md">
-            Koltuklarınızı yenilemek için dayanıklı ve estetik kumaş seçenekleri sunuyor, usta işçilikle uzun ömürlü
-            çözümler sağlıyoruz. Konfor ve şıklığı bir arada yakalayın.
+            Yat ve tekne koltuklarınızı yenileyerek dayanıklı, estetik ve konforlu döşeme çözümleri sunuyoruz. Usta
+            işçilikle uzun ömürlü ve şık bir görünüm sağlıyoruz.
           </p>
           <ul class="list-disc list-inside text-[#132E35] max-w-md space-y-3 text-left">
             <li>Özel renk ve doku seçenekleri</li>
@@ -515,24 +520,40 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
           <div
             class="bg-[#132E35] text-[#B58863] rounded-full p-6 mb-8 flex items-center justify-center w-24 h-24 drop-shadow-xl flex-shrink-0 transition-colors duration-300 group-hover:bg-[#B58863] group-hover:text-[#132E35]"
             style="transform-origin:center center;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round"
-              class="h-12 w-12 mx-auto block transition-transform duration-300 group-hover:scale-110 group-hover:stroke-[#132E35]"
-              viewBox="0 0 24 24" style="transform-origin:center center;">
-              <path d="M6 3v13"></path>
-              <path d="M18 3v13"></path>
-              <path d="M3 16h18"></path>
-              <path d="M12 16v5"></path>
-              <path d="M8 21h8"></path>
+            <svg fill="#ae835f" width="800" height="800" viewBox="0 -30.88 122.88 122.88"
+              xmlns="http://www.w3.org/2000/svg" style="enable-background:new 0 0 122.88 61.11"
+              transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)">
+              <g>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M65.22,0h26.54h6.63c0.38,0,0.52,0.34,0.68,0.68l2.66,5.53c0.16,0.34-0.31,0.68-0.68,0.68H55.93
+          C52.98,6.9,58.02,0,65.22,0L65.22,0z M23.83,45.74v3.74h3.74C27.12,47.65,25.67,46.19,23.83,45.74L23.83,45.74z
+          M27.57,51.93h-3.74v3.74C25.67,55.22,27.12,53.77,27.57,51.93L27.57,51.93z M21.39,55.67v-3.74h-3.74
+          C18.1,53.77,19.55,55.22,21.39,55.67L21.39,55.67z M17.64,49.49h3.74v-3.74C19.55,46.2,18.1,47.65,17.64,49.49L17.64,49.49z
+          M90.05,45.74v3.74h3.74C93.34,47.65,91.89,46.19,90.05,45.74L90.05,45.74z M93.79,51.93h-3.74v3.74
+          C91.89,55.22,93.34,53.77,93.79,51.93L93.79,51.93z M87.61,55.67v-3.74h-3.74C84.31,53.77,85.76,55.22,87.61,55.67L87.61,55.67z
+          M83.86,49.49h3.74v-3.74C85.76,46.2,84.31,47.65,83.86,49.49L83.86,49.49z M89.66,12.77h3.52c5.08,0.23,7.17,0.05,9.19,1.59
+          c2.5,1.91,3.48,10.35,4.52,14.25c0.07,0.26-0.23,0.5-0.5,0.5H90.88c-0.27,0-0.47-0.22-0.5-0.5l-1.22-15.35
+          C89.14,13,89.39,12.77,89.66,12.77L89.66,12.77z M66.09,12.86h-11.5c-5.25,0-13.89,8.63-16.15,15.61
+          c-0.11,0.34,0.29,0.65,0.65,0.65h25.18c0.36,0,0.6-0.29,0.65-0.65l1.83-14.96C66.78,13.15,66.44,12.86,66.09,12.86L66.09,12.86z
+          M71.07,12.8h14.07c0.27,0,0.48,0.23,0.5,0.5l1.07,15.32c0.02,0.27-0.23,0.5-0.5,0.5H69.24c-0.27,0-0.53-0.23-0.5-0.5l1.83-15.32
+          C70.6,13.02,70.79,12.8,71.07,12.8L71.07,12.8z M22.61,40.31c5.74,0,10.4,4.66,10.4,10.4c0,5.74-4.66,10.4-10.4,10.4
+          c-5.74,0-10.4-4.66-10.4-10.4C12.21,44.97,16.87,40.31,22.61,40.31L22.61,40.31z M1.81,40.78c0.53-0.24,1.11-0.35,1.74-0.34
+          c-0.03-3.28,0.19-6.14,0.95-8.17c0.28-1.17,0.79-2.02,1.47-2.64c2.14-1.91,21.25-3.59,25.28-4.11
+          c4.95-4.84,10.46-9.27,16.33-13.46c1.63-1.38,3.96-2.06,6.9-2.13l46.41-0.04c3.51-0.02,6.21,1.48,7.93,4.85l3.87,11.15l0.88-0.24
+          v-4.34c-0.16-1.45,0.41-2.17,1.52-2.35h5.2c1.43,0.06,2.44,0.78,2.6,2.85v15.42c0.01,1.59-0.57,2.63-2.04,2.85h-4.83
+          c-0.48,0.11-0.33,0.48-0.37,0.99v5.26c-0.35,3.88-1.41,6.88-4.52,7.27h-9.41c0.2-4.56-0.66-8.29-2.75-11.08
+          c-7.59-10.14-24.06-4.1-22.95,11.11H35.58c0.34-4.86-0.58-8.55-2.59-11.2c-7.57-9.99-25.18-4.6-23.1,11.51H3.64
+          C-0.13,53.94-1.36,42.19,1.81,40.78L1.81,40.78z M88.83,40.31c5.74,0,10.4,4.66,10.4,10.4c0,5.74-4.66,10.4-10.4,10.4
+          c-5.74,0-10.4-4.66-10.4-10.4C78.43,44.97,83.08,40.31,88.83,40.31L88.83,40.31z" />
+              </g>
             </svg>
           </div>
           <h4
             class="text-3xl font-bold mb-6 text-[#132E35] tracking-tight transition-colors duration-300 group-hover:text-[#B58863]">
-            Sandalye Döşeme
+            Araç Döşeme
           </h4>
           <p class="text-[#0D1F23] text-lg mb-10 leading-relaxed max-w-md">
-            Eski sandalyelerinizi yenilemek için rustik ve modern tarzda döşeme çözümleri sunuyoruz. Konforlu ve şık
-            sandalyeler.
+            Aracınızın iç mekanını yenileyerek konforlu, modern ve estetik bir görünüm kazandırıyoruz. Kaliteli malzeme
+            ve işçilik ile sürüş keyfinizi artırıyoruz.
           </p>
           <ul class="list-disc list-inside text-[#132E35] max-w-md space-y-3 text-left">
             <li>Özel kumaş ve renk seçenekleri</li>
@@ -548,47 +569,29 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
           <div
             class="bg-[#132E35] text-[#B58863] rounded-full p-6 mb-8 flex items-center justify-center w-24 h-24 drop-shadow-xl flex-shrink-0 transition-colors duration-300 group-hover:bg-[#B58863] group-hover:text-[#132E35]"
             style="transform-origin:center center;">
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="800px" height="800px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve">
-              <path fill="#B58863"
-                d="M15,15.5c0-0.276,0.224-0.5,0.5-0.5h8c0.276,0,0.5,0.224,0.5,0.5l0,0c0,0.276-0.224,0.5-0.5,0.5h-8C15.224,16,15,15.776,15,15.5L15,15.5z" />
-              <path fill="#B58863" d="M22.89,17c-0.51,4.8-2.939,8.08-7.01,8.83c-3.94-0.84-6.29-4.1-6.78-8.83H22.89z" />
-              <path fill="#B58863" d="M19.934,3.22c-0.16-0.22-0.469-0.29-0.699-0.14c-0.23,0.16-0.289,0.47-0.141,0.7
-                c1.17,1.75,1.121,3.21,0.301,4.17c-0.25,0.3-0.471,0.49-0.811,0.7c-0.459,0.27-0.939,0.56-1.25,1.09c-0.51,0.88-0.43,1.95,0.23,3.02
-	              c0.09,0.16,0.25,0.24,0.42,0.24l0.26-0.07c0.24-0.15,0.311-0.46,0.17-0.69c-0.33-0.53-0.631-1.3-0.219-2
-	c0.189-0.31,0.52-0.51,0.898-0.73c0.381-0.23,0.701-0.49,1.061-0.91C21.514,7.01,21.094,4.96,19.934,3.22z" />
-              <path fill="#B58863"
-                d="M14.904,2.21c-0.15-0.22-0.47-0.28-0.69-0.12c-0.23,0.16-0.28,0.47-0.12,0.7c0.5,0.72,1.01,1.84,0.89,2.8
-	c-0.13,1.09-0.96,1.33-2.38,1.64c-0.43,0.1-0.86,0.19-1.27,0.33c-1.21,0.42-1.93,1.08-2.19,2.02c-0.31,1.07-0.11,2.36,0.49,3.21
-	c0.1,0.14,0.25,0.21,0.41,0.21c0.1,0,0.2-0.03,0.29-0.09c0.23-0.16,0.28-0.47,0.12-0.7c-0.42-0.59-0.57-1.58-0.35-2.36
-	c0.17-0.61,0.67-1.04,1.56-1.35c0.35-0.12,0.74-0.2,1.15-0.29c1.33-0.29,2.93-0.65,3.17-2.5C16.165,4.14,15.205,2.63,14.904,2.21z" />
-              <path fill="#B58863" d="M18.93,3.22C18.77,3,18.46,2.93,18.23,3.08C18,3.24,17.94,3.55,18.09,3.78c1.17,1.75,1.12,3.21,0.3,4.17
-	c-0.25,0.3-0.47,0.49-0.81,0.7c-0.46,0.27-0.94,0.56-1.25,1.09c-0.51,0.88-0.43,1.95,0.23,3.02c0.09,0.16,0.25,0.24,0.42,0.24
-	l0.26-0.07c0.24-0.15,0.31-0.46,0.17-0.69c-0.33-0.53-0.63-1.3-0.22-2c0.189-0.31,0.52-0.51,0.899-0.73
-	c0.38-0.23,0.7-0.49,1.061-0.91C20.51,7.01,20.09,4.96,18.93,3.22z" />
-              <path fill="#B58863"
-                d="M13.9,2.21c-0.15-0.22-0.47-0.28-0.69-0.12c-0.23,0.16-0.28,0.47-0.12,0.7c0.5,0.72,1.01,1.84,0.89,2.8
-	c-0.13,1.09-0.96,1.33-2.38,1.64c-0.43,0.1-0.86,0.19-1.27,0.33C9.12,7.98,8.4,8.64,8.14,9.58c-0.31,1.07-0.11,2.36,0.49,3.21
-	C8.73,12.93,8.88,13,9.04,13c0.1,0,0.2-0.03,0.29-0.09c0.23-0.16,0.28-0.47,0.12-0.7c-0.42-0.59-0.57-1.58-0.35-2.36
-	c0.17-0.61,0.67-1.04,1.56-1.35c0.35-0.12,0.74-0.2,1.15-0.29c1.33-0.29,2.93-0.65,3.17-2.5C15.16,4.14,14.2,2.63,13.9,2.21z" />
-              <g>
-                <path fill="#B58863" d="M23.97,16.01C23.98,15.68,24,15.35,24,15c0-0.55-0.45-1-1-1H5c-0.55,0-1,0.45-1,1c0,5.59,2.08,9.33,5.47,11
-		H9c-0.28,0-0.5,0.22-0.5,0.5S8.72,27,9,27h10c0.28,0,0.5-0.22,0.5-0.5S19.28,26,19,26h-0.47c0.56-0.28,1.09-0.61,1.58-1
-		c6.83-0.04,7.949-3.72,7.949-5.5C28.06,17.08,26.49,16.07,23.97,16.01z M14,26c-5.8,0-9-4.37-9-11h18c0,1.45-0.15,2.79-0.46,4H16.5
-		c-0.28,0-0.5,0.22-0.5,0.5s0.22,0.5,0.5,0.5h5.75c-0.24,0.73-0.55,1.4-0.91,2H17.5c-0.28,0-0.5,0.22-0.5,0.5s0.22,0.5,0.5,0.5h3.16
-		C19.14,24.91,16.89,26,14,26z M21.21,23.95c1.46-1.67,2.39-4,2.68-6.95c2.721,0.05,3.051,1.23,3.051,2.5
-		C26.94,20.28,26.69,23.48,21.21,23.95z" />
+            <svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#ae835f">
+
+              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+              <g id="SVGRepo_iconCarrier">
+
+                <path fill="#ae835f"
+                  d="M256 15.99c-8.8 0-16 14.33-16 32 0 8.47 1.7 16.59 4.7 22.57-4.7.21-9 1.16-13.7 2.43v15.85c17.1-2.42 34.1-2.31 50 0V72.99c-4.5-1.35-9.4-2.11-13.7-2.43 3-5.98 4.7-14.1 4.7-22.57 0-17.67-7.2-32-16-32zM86.23 86.28c-6.25 6.25-1.19 21.42 11.3 33.92 6.07 6 12.97 10.6 19.37 12.7-3.2 3.5-5.6 7.2-8 11.4l11.3 11.2c9.9-13.4 21.9-25.4 35.3-35.3l-11.2-11.3c-4.2 2.2-8 5.2-11.4 8-2.1-6.4-6.7-13.3-12.7-19.3-8-6.21-24.55-20.4-33.97-11.32zm305.57 11.3c-6 6.02-10.6 12.92-12.7 19.32-3.5-3.2-7.2-5.6-11.4-8l-11.2 11.3c13.4 9.9 25.4 21.9 35.3 35.3l11.3-11.2c-2.2-4.2-5.2-8-8-11.4 6.3-2.2 13.2-6.7 19.2-12.7 12.5-12.5 17.6-27.69 11.3-33.93-9.9-7.87-28 5.62-33.8 11.31zm-142.3 7.52c-36.8 1.6-70.2 16.3-95.6 39.6-3.3 3.1-6.6 6.3-9.2 9.2-23.3 25.4-38 58.8-39.6 95.7 0 4.5-.2 9.1.1 13 1.5 36.8 16.2 70.2 39.5 95.6 3.1 3.2 6.4 6.5 9.2 9.2 25.4 23.2 58.8 37.9 95.6 39.5h.2c4.1.2 8.7 0 12.8 0 36.8-1.6 70.2-16.3 95.6-39.6 3.3-3.1 6.6-6.3 9.2-9.2 23.3-25.4 38-58.8 39.6-95.6v-.2c.2-4.2 0-8.7 0-12.8-1.6-36.8-16.3-70.2-39.6-95.6-3.1-3.3-6.3-6.6-9.2-9.2-25.4-23.3-58.8-38-95.6-39.6-4.5-.2-9.1 0-13 0zm6.5 10.7c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm6.9 28.4c25.7 1.6 49.1 11.8 67.3 27.9 3.4 3.1 6.7 6.3 9.7 9.7 16.1 18.2 26.3 41.6 27.9 67.4.4 4.6 0 9.2 0 13.7-1.6 25.7-11.8 49.1-27.9 67.3-3.1 3.4-6.3 6.7-9.7 9.7-18.2 16.1-41.6 26.3-67.4 27.9-4.6.1-9.2.4-13.7 0-25.7-1.6-49.1-11.8-67.2-27.9h-.1c-3.4-3-6.6-6.3-9.6-9.7-16.1-18.1-26.4-41.5-28-67.3-.1-4.6-.4-9.1 0-13.6.5-25.8 13.3-50.5 27.9-67.5 3.1-3.4 6.3-6.7 9.7-9.7 18.2-16.1 41.6-26.3 67.4-27.9 4.6-.4 9.2 0 13.7 0zm-94.8 12.6c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zm187.1 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zM240 163.3v8.7c2.5 3.2 4.4 5.5 7.8 6.8-.7 12.4-1.6 25.1-2.8 37.7 7.4-1.9 15.2-2 22.1.1-1.2-12.7-2.2-25.4-2.9-37.9 7.9-2.1 7.8-8.6 7.8-15.4-11-1.7-21.8-1.6-32 0zm-38.3 15.8c-8.7 6.2-16.4 13.9-22.6 22.6l6.2 6.2c4 .5 7 .8 10.3-.7 8.3 9.3 16.6 18.9 24.7 28.7 3.7-6.5 9.1-11.9 15.7-15.6-9.9-8.1-19.5-16.4-28.8-24.7 1.8-3.1 1.3-6.7.7-10.3zm108.6 0l-6.2 6.2c-.7 4-.8 6.9.6 10.3-9.2 8.3-18.9 16.6-28.7 24.7 6.5 3.7 11.9 9.1 15.6 15.7 8.1-9.9 16.5-19.5 24.7-28.8 3.2 1.7 6.7 1.3 10.3.7l6.2-6.2c-6.2-8.7-13.8-16.4-22.5-22.6zM423.1 231c2.5 17.1 2.3 34.1 0 50H439c1.5-4.5 2-9.4 2.3-13.7 6 3 14.2 4.7 22.7 4.7 17.7 0 32-7.2 32-16s-14.3-16-32-16c-8.5 0-16.7 1.7-22.7 4.7-.1-4.7-1-9-2.3-13.7zm-350.07.1c-1.35 4.5-2.11 9.2-2.4 13.6-6.02-3-14.15-4.6-22.6-4.6-17.67 0-32 7.2-32 16s14.33 16 32 16c8.48 0 16.61-1.7 22.6-4.7.15 4.7 1.12 9 2.4 13.7h15.8c-2.38-17.1-2.5-34.1 0-50zM256 233c-12.9 0-23 10.2-23 23s10.1 23 23 23c12.8 0 23-10.2 23-23s-10.2-23-23-23zm84 7c-3.2 2.5-5.5 4.4-6.8 7.8-12.4-.7-25.1-1.6-37.7-2.8 1.9 7.5 1.9 15.2 0 22.1 12.6-1.2 25.2-2.2 37.7-2.9 1 3.5 3.8 5.7 6.8 7.8h8.7c1.7-11 1.6-21.8 0-32zm-176.7.1c-1.7 10.9-1.5 21.8 0 32h8.7c3.1-2.5 5.6-4.3 6.7-7.8 12.5.6 25.1 1.6 37.8 2.8-2-7.5-2-15.2-.1-22.1-12.6 1.2-25.3 2.1-37.7 2.8-.9-3.5-3.8-5.7-6.7-7.7zm224.9 7.9c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-264.4.1c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm167.9 28c-3.7 6.5-9.1 11.9-15.7 15.6 9.9 8.1 19.5 16.4 28.8 24.7-1.8 3.1-1.3 6.7-.7 10.3l6.2 6.2c8.7-6.2 16.4-13.9 22.6-22.6l-6.2-6.2c-4-.5-7-.8-10.3.7-8.3-9.3-16.6-18.9-24.7-28.7zm-71.4 0c-8.1 9.8-16.4 19.4-24.7 28.7-3.1-1.8-6.7-1.3-10.2-.7l-6.3 6.2c6.2 8.8 13.9 16.5 22.7 22.6l6.2-6.2c.5-4 .8-7-.7-10.3 9.3-8.3 18.9-16.6 28.7-24.7-6.5-3.7-12-9.1-15.7-15.6zm24.6 19.3c1.2 12.7 2.2 25.4 2.9 37.9-3.5.8-5.8 3.8-7.8 6.7v8.7c11 1.7 21.8 1.6 32 0V340c-2.5-3.2-4.4-5.5-7.8-6.8.7-12.4 1.6-25.1 2.8-37.7-7.7 1.3-15.8 1.7-22.1-.1zm-76.7 48.5c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.2-3 11.3 0zm187 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.3-3 11.3 0zm36.6 12.6c-9.9 13.4-21.9 25.4-35.3 35.3l11.2 11.3c4.2-2.2 8-5.2 11.4-8 2.1 6.4 6.7 13.3 12.7 19.3 12.5 12.5 27.6 17.5 33.9 11.3 6.2-6.3 1.2-21.4-11.3-33.9-6-6-12.9-10.6-19.3-12.7 3.2-3.5 5.6-7.2 8-11.4zm-271.6 0L109 367.7c2.3 4.1 5.1 8.2 8 11.4-6.4 2.1-13.3 6.7-19.37 12.7-12.47 12.5-17.52 27.6-11.3 33.9 6.24 6.3 21.47 1.2 33.97-11.3 6-6 10.6-12.9 12.7-19.3 3.5 3.2 7.2 5.6 11.4 8l11.2-11.2c-13.5-10-25.4-21.9-35.4-35.4zM256 380.2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-25 43V439c4.5 1.4 9.4 2.1 13.7 2.4-3 6-4.7 14.1-4.7 22.6 0 17.7 7.2 32 16 32s16-14.3 16-32c0-8.5-1.7-16.6-4.7-22.6 4.7-.2 9-1.1 13.7-2.4v-15.9c-17.1 2.5-34.1 2.4-50 .1z" />
+
               </g>
-              <rect x="5" y="16" fill="#B58863" width="18" height="1" />
+
             </svg>
 
           </div>
           <h4
             class="text-3xl font-bold mb-6 text-[#132E35] tracking-tight transition-colors duration-300 group-hover:text-[#B58863]">
-            Cafe ve Ofis Döşeme
+            Ev - Ofis Döşeme
           </h4>
           <p class="text-[#0D1F23] text-lg mb-10 leading-relaxed max-w-md">
-            Kafe, restoran ve ofis koltuklarınızı yenileyerek dayanıklı ve şık tasarımlar sunuyoruz.
+            Ev, ofis, kafe ve restoran koltuklarınızı yenileyerek dayanıklı, kolay temizlenebilir ve şık tasarımlar
+            sunuyoruz. Mekânınıza yeni bir soluk getiriyoruz.
           </p>
           <ul class="list-disc list-inside text-[#132E35] max-w-md space-y-3 text-left">
             <li>Kolay temizlenebilir kumaş</li>
@@ -647,6 +650,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     </section>
 
     <!-- Referanslar -->
+    <!--
     <section id="referanslar" data-color="#AFB3B7"
       class="bg-[#AFB3B7] py-24 px-6 min-h-screen flex flex-col items-center justify-center">
       <div class="max-w-7xl w-full">
@@ -656,7 +660,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
         <div class="relative">
 
-          <!-- Scrollable Container -->
           <div ref="scrollContainer" class="overflow-x-auto scroll-smooth no-scrollbar py-6" tabindex="0">
             <div class="flex space-x-6">
               <div v-for="(ref, idx) in references" :key="idx"
@@ -667,7 +670,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
             </div>
           </div>
 
-          <!-- Sol Kaydırma Butonu -->
           <button @click="scrollLeft" aria-label="Sol Kaydır"
             class="absolute top-1/2 left-2 -translate-y-1/2 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[#B58863] hover:text-[#132E35] transition z-20">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -676,7 +678,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
             </svg>
           </button>
 
-          <!-- Sağ Kaydırma Butonu -->
           <button @click="scrollRight" aria-label="Sağ Kaydır"
             class="absolute top-1/2 right-2 -translate-y-1/2 bg-[#132E35] text-[#B58863] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[#B58863] hover:text-[#132E35] transition z-20">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -688,51 +689,50 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
         </div>
       </div>
     </section>
+    -->
 
     <!-- Yorumlar -->
-    <section id="yorumlar" data-color="#132E35"
-      class="bg-[#132E35] text-[#D4C495] flex flex-col items-center justify-center min-h-screen py-24 px-6">
-      <div class="max-w-7xl w-full">
-        <h3 class="text-4xl font-extrabold mb-12 select-none text-center tracking-wide text-[#B58863]">Müşteri Yorumları
-        </h3>
+    <!--
+      <section id="yorumlar" data-color="#132E35"
+        class="bg-[#132E35] text-[#D4C495] flex flex-col items-center justify-center min-h-screen py-24 px-6">
+        <div class="max-w-7xl w-full">
+          <h3 class="text-4xl font-extrabold mb-12 select-none text-center tracking-wide text-[#B58863]">Müşteri Yorumları
+          </h3>
+  
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div v-for="(testimonial, index) in testimonials" :key="index" class="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#B58863]/30 shadow-lg shadow-black/30
+           transition duration-500 ease-in-out
+           hover:scale-105 hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]
+           max-w-xs p-5 flex flex-col items-center text-center mx-auto">
+  
+              <img :src="testimonial.image" :alt="testimonial.name"
+                class="w-20 h-20 rounded-full object-cover border-2 border-[#B58863] mb-4 shadow-sm" />
+  
+              <p class="text-[#D4C495] italic text-sm leading-relaxed mb-5 font-serif select-text">&quot;{{
+                testimonial.comment }}&quot;</p>
+  
+              <div class="flex justify-center space-x-1 mb-3">
+                <template v-for="starIndex in 5" :key="starIndex">
+                  <svg v-if="starIndex <= testimonial.rating" xmlns="http://www.w3.org/2000/svg"
+                    class="w-4 h-4 text-[#B58863]" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
+                  </svg>
+                  <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#7a6f44]" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path
+                      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
+                  </svg>
+                </template>
+</div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          <div v-for="(testimonial, index) in testimonials" :key="index" class="group relative cursor-pointer overflow-hidden rounded-3xl border border-[#B58863]/30 shadow-lg shadow-black/30
-         transition duration-500 ease-in-out
-         hover:scale-105 hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]
-         max-w-xs p-5 flex flex-col items-center text-center mx-auto">
+<h4 class="text-[#B58863] font-semibold text-base tracking-wide select-text">{{ testimonial.name }}</h4>
+</div>
 
-            <!-- Profil Fotoğrafı -->
-            <img :src="testimonial.image" :alt="testimonial.name"
-              class="w-20 h-20 rounded-full object-cover border-2 border-[#B58863] mb-4 shadow-sm" />
-
-            <!-- Yorum Metni -->
-            <p class="text-[#D4C495] italic text-sm leading-relaxed mb-5 font-serif select-text">&quot;{{
-              testimonial.comment }}&quot;</p>
-
-            <!-- Yıldız Puan -->
-            <div class="flex justify-center space-x-1 mb-3">
-              <template v-for="starIndex in 5" :key="starIndex">
-                <svg v-if="starIndex <= testimonial.rating" xmlns="http://www.w3.org/2000/svg"
-                  class="w-4 h-4 text-[#B58863]" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
-                </svg>
-                <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-[#7a6f44]" fill="currentColor"
-                  viewBox="0 0 20 20">
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.163c.969 0 1.371 1.24.588 1.81l-3.37 2.448a1 1 0 00-.364 1.118l1.287 3.957c.3.921-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.175 0l-3.37 2.448c-.785.57-1.838-.197-1.54-1.118l1.287-3.957a1 1 0 00-.364-1.118L2.07 9.384c-.783-.57-.38-1.81.588-1.81h4.163a1 1 0 00.95-.69l1.286-3.957z" />
-                </svg>
-              </template>
-            </div>
-
-            <!-- İsim -->
-            <h4 class="text-[#B58863] font-semibold text-base tracking-wide select-text">{{ testimonial.name }}</h4>
-          </div>
-
-        </div>
-      </div>
-    </section>
+</div>
+</div>
+</section>
+-->
 
     <!-- Sıkça Sorulan Sorular -->
     <section id="sss" data-color="#698180"
@@ -772,7 +772,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
               Adres
             </h4>
             <p class="text-base sm:text-lg leading-relaxed max-w-md">
-              Atatürk Mah. Döşemeci Sok. No:12, İstanbul, Türkiye
+              Bayır, Sülün Sk. No:1 z03, 48000 Menteşe/Muğla
             </p>
           </div>
 
@@ -781,10 +781,10 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
               class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
               Telefon
             </h4>
-            <a href="tel:+905551234567" class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
+            <a href="tel:+905455074037" class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
                  text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
                  transition duration-300 ease-in-out text-sm sm:text-base">
-              +90 555 123 45 67
+              +90 545 507 40 37
             </a>
           </div>
 
@@ -806,7 +806,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
               class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
               WhatsApp
             </h4>
-            <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="inline-flex items-center mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E]
+            <a href="https://wa.me/905455074037" target="_blank" rel="noopener noreferrer" class="inline-flex items-center mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E]
          text-white font-semibold shadow-lg hover:from-[#128C7E] hover:to-[#075E54]
          transition duration-300 ease-in-out text-sm sm:text-base">
 
@@ -830,16 +830,18 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
         <!-- Harita -->
         <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-[#B58863]/50 hover:border-[#B58863]
              transition-colors duration-400 mt-14 md:mt-0 min-h-[300px] md:min-h-[350px]">
+
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.456823108488!2d28.9783584!3d41.0082376!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa3556e4c45f5%3A0x1b7e31606bb7e50d!2sAtat%C3%BCrk%20Mahallesi%2C%20D%C3%B6%C5%9Femeci%20Sk.%2C%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1699400000000!5m2!1str!2str"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3175.219012838681!2d28.2095646!3d37.266233299999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bf130bc1f6e38b%3A0x44c9249a5df06053!2zbXXEn2xhIFnEsWxkxLFyxLFtIGtvbHR1ayBkw7bFn2VtZQ!5e0!3m2!1str!2str!4v1752247984310!5m2!1str!2str"
             width="100%" height="100%" class="w-full h-full" style="border:0;" allowfullscreen="" loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"></iframe>
+
         </div>
       </div>
     </section>
 
     <!-- WhatsApp Sabit Buton -->
-    <a href="https://wa.me/905551234567" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E]
+    <a href="https://wa.me/905455074037" target="_blank" rel="noopener noreferrer" class="fixed bottom-6 right-6 bg-gradient-to-r from-[#25D366] to-[#128C7E]
          text-white p-4 rounded-full shadow-lg flex items-center justify-center
          hover:from-[#128C7E] hover:to-[#075E54] transition duration-300" aria-label="WhatsApp ile mesaj gönder">
 
@@ -858,7 +860,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     <!-- Footer -->
     <footer class="bg-[#132E35] text-[#B58863] py-10 flex flex-col items-center justify-center">
       <p class="mb-2">&copy; 2025 Döşemeci. Tüm hakları saklıdır.</p>
-      <p>Designed with ♥ by Lukafencel</p>
     </footer>
 
     <!-- Modal -->
