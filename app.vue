@@ -145,10 +145,12 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     <header :style="{ backgroundColor: navbarBgColor }"
       class="fixed top-0 left-0 w-full z-40 transition-colors duration-300">
       <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:p-6">
-        <h1 class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none cursor-pointer"
-          :style="{ color: navbarTextColorComputed }">
-          <a href="#top" @click="scrollToSection($event, '#top')" class="hover:opacity-80 transition">Döşemeci</a>
-        </h1>
+       <h1 class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none cursor-pointer flex items-center gap-2"
+    :style="{ color: navbarTextColorComputed }">
+  <img src="/public/muğla döşeme.png" alt="Logo" class="h-9 md:h-12 object-contain" />
+  <a href="#top" @click="scrollToSection($event, '#top')" class="hover:opacity-80 transition">Yıldırım Döşeme</a>
+</h1>
+
 
         <!-- Hamburger Button -->
         <button @click="menuOpen = !menuOpen" class="md:hidden">
@@ -207,30 +209,34 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
     </header>
 
     <!-- hero -->
-<section id="top" data-color="#0D1F23" class="relative pt-28 h-[110vh] bg-center bg-cover bg-no-repeat"
-  style="background-image: url('/hero.png');">
+    <section id="top" data-color="#0D1F23" class="relative pt-28 h-[110vh] bg-center bg-cover bg-no-repeat"
+      style="background-image: url('/hero.png');">
 
-<div class="absolute left-6 md:left-4 md:top-60 max-w-2xl" style="top: 280px;">
-  <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white max-w-[18ch] leading-tight tracking-wide">
-    Muğla Yatağan’da Yat, Koltuk ve Araç Döşeme Hizmeti
-  </h1>
-  <p class="mt-6 text-base md:text-lg lg:text-2xl font-semibold text-[#D4C29A] max-w-2xl leading-relaxed">
-    Yıldırım Döşeme olarak Muğla Yatağan’da yat döşeme, koltuk döşeme, araç ve tekne döşeme hizmetlerini kaliteli işçilik ve uygun fiyat avantajıyla sunuyoruz. Aracınızı veya teknenizi yenilemek için hemen bizimle iletişime geçin.
-  </p>
-</div>
+      <div class="absolute left-6 md:left-4 md:top-60 max-w-2xl" style="top: 280px;">
+        <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white max-w-[18ch] leading-tight tracking-wide">
+          Muğla Yatağan’da Yat, Koltuk ve Araç Döşeme Hizmeti
+        </h1>
+        <p class="mt-6 text-base md:text-lg lg:text-2xl font-semibold text-[#D4C29A] max-w-2xl leading-relaxed">
+          Yıldırım Döşeme olarak Muğla Yatağan’da yat döşeme, koltuk döşeme, araç ve tekne döşeme hizmetlerini kaliteli
+          işçilik ve uygun fiyat avantajıyla sunuyoruz. Aracınızı veya teknenizi yenilemek için hemen bizimle iletişime
+          geçin.
+        </p>
+      </div>
 
-  <!-- Sol alt butonlar -->
-<!-- Sol alt butonlar -->
-<div class="absolute left-6 bottom-32 md:bottom-48 flex space-x-4 z-10 md:left-4 md:space-x-6">
-  <a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')" class="bg-[#B58863] text-white px-6 py-4 rounded-lg font-semibold hover:bg-[#a0774d] transition shadow-lg md:px-8 md:py-5 md:text-lg">
-    Hizmetlerimiz
-  </a>
-  <a href="#iletisim" @click="scrollToSection($event, '#iletisim')" class="bg-[#132E35] text-[#B58863] px-6 py-4 rounded-lg font-semibold border border-[#B58863] hover:bg-[#B58863] hover:text-white transition shadow-lg md:px-8 md:py-5 md:text-lg">
-    İletişime Geçin
-  </a>
-</div>
+      <!-- Sol alt butonlar -->
+      <!-- Sol alt butonlar -->
+      <div class="absolute left-6 bottom-32 md:bottom-48 flex space-x-4 z-10 md:left-4 md:space-x-6">
+        <a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')"
+          class="bg-[#B58863] text-white px-6 py-4 rounded-lg font-semibold hover:bg-[#a0774d] transition shadow-lg md:px-8 md:py-5 md:text-lg">
+          Hizmetlerimiz
+        </a>
+        <a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
+          class="bg-[#132E35] text-[#B58863] px-6 py-4 rounded-lg font-semibold border border-[#B58863] hover:bg-[#B58863] hover:text-white transition shadow-lg md:px-8 md:py-5 md:text-lg">
+          İletişime Geçin
+        </a>
+      </div>
 
-</section>
+    </section>
 
 
 
