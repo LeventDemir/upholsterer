@@ -527,7 +527,9 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
     <!-- İletişim -->
     <section id="iletisim" data-color="#0D1F23"
-      class="bg-[#0D1F23] text-[#AFB3B7] py-24 px-4 min-h-screen flex flex-col justify-center items-center">
+      class="bg-[#0D1F23] text-[#AFB3B7] pt-36 px-4 min-h-screen flex flex-col justify-start items-center">
+
+
       <h3 class="text-4xl sm:text-5xl font-extrabold mb-12 select-none text-center">İletişim</h3>
 
       <div class="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -558,17 +560,19 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
             </a>
           </div>
 
-          <div class="flex items-center space-x-6 sm:space-x-8">
-            <h4
+          <!--
+            <div class="flex items-center space-x-6 sm:space-x-8">
+              <h4
               class="text-2xl sm:text-3xl font-semibold mb-3 border-b-4 border-[#B58863] inline-block pb-2 w-36 sm:w-40">
               E-posta
             </h4>
             <a href="mailto:info@dosemeci.com.tr" class="inline-block mt-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#B58863] to-[#a97d45]
-                 text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
-                 transition duration-300 ease-in-out text-sm sm:text-base">
-              info@dosemeci.com.tr
-            </a>
-          </div>
+            text-[#132E35] font-semibold shadow-lg hover:from-[#a97d45] hover:to-[#876734]
+            transition duration-300 ease-in-out text-sm sm:text-base">
+            info@dosemeci.com.tr
+          </a>
+        </div>
+        -->
 
           <!-- WhatsApp Butonu -->
           <div class="flex items-center space-x-6 sm:space-x-8">
