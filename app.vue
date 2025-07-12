@@ -664,7 +664,7 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
 @media (max-width: 767px) {
   .buttons-container {
-    bottom: 12rem !important;
+    bottom: 14rem !important;
     /* veya ihtiyacına göre 14rem, 16rem deneyebilirsin */
   }
 }
