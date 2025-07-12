@@ -223,10 +223,10 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
 
       <div class="absolute left-6 md:left-4 max-w-2xl" style="top: 280px;">
         <h1 class="text-3xl md:text-5xl lg:text-7xl font-extrabold text-white max-w-[18ch] leading-tight tracking-wide">
-          Muğla Yatağan’da Yat, Koltuk ve Araç Döşeme Hizmeti
+          Muğla’da Yat, Koltuk ve Araç Döşeme Hizmeti
         </h1>
         <p class="mt-6 text-base md:text-lg lg:text-2xl font-semibold text-[#D4C29A] max-w-2xl leading-relaxed">
-          Yıldırım Döşeme olarak Muğla Yatağan’da yat döşeme, koltuk döşeme, araç ve tekne döşeme hizmetlerini kaliteli
+          Yıldırım Döşeme olarak Muğla’da yat döşeme, koltuk döşeme, araç ve tekne döşeme hizmetlerini kaliteli
           işçilik ve uygun fiyat avantajıyla sunuyoruz. Aracınızı veya teknenizi yenilemek için hemen bizimle iletişime
           geçin.
         </p>
