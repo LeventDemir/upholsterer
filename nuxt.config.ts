@@ -2,7 +2,16 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', 'nuxt-mongoose'],
+  runtimeConfig: {
+    mongodbUri: process.env.MONGODB_URI
+  },
+  mongoose: {
+    uri: process.env.MONGODB_URI
+  },
+  routeRules: {
+    '/api/*': {},
+  },
   app: {
     head: {
       title: 'Muğla Döşeme | Yatağan Yat, Koltuk, Araç ve Tekne Döşeme - Yıldırım Döşeme',
@@ -42,4 +51,4 @@ export default defineNuxtConfig({
     }
 
   }
-}) 
+})

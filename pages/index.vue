@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-
+import { ref } from 'vue'
+import Gallery from '~/components/Gallery.vue'
+import Navbar from '~/components/Navbar.vue'
 
 const faqOpen = ref(null)
 
@@ -17,205 +18,13 @@ const faqs = ref([
   { q: "Ödeme seçenekleriniz nelerdir?", a: "Kredi kartı, banka havalesi ve kapıda ödeme seçeneklerimiz mevcuttur." }
 ])
 
-const navbarBgColor = ref('transparent')
-const navbarTextColorPrimary = ref('#AFB3B7')
-const navbarTextColorSecondary = ref('#5A636A')
-const isTop = ref(true)
-
-function handleScroll() {
-  const scrollY = window.scrollY
-  isTop.value = scrollY < 10
-
-  if (isTop.value) {
-    navbarBgColor.value = 'transparent'
-    navbarTextColorPrimary.value = '#AFB3B7'
-    navbarTextColorSecondary.value = '#5A636A'
-    return
-  }
-
-  const navbarHeight = document.querySelector('header').offsetHeight
-  const sections = Array.from(document.querySelectorAll('section[data-color]'))
-  const scrollPosition = scrollY + navbarHeight + 5
-
-  let currentSection = sections.find(section => {
-    const top = section.offsetTop
-    const bottom = top + section.offsetHeight
-    return scrollPosition >= top && scrollPosition < bottom
-  })
-
-  if (!currentSection) {
-    navbarBgColor.value = 'transparent'
-    navbarTextColorPrimary.value = '#AFB3B7'
-    navbarTextColorSecondary.value = '#5A636A'
-  } else {
-    const bg = currentSection.getAttribute('data-color')
-    navbarBgColor.value = bg
-
-    switch (bg) {
-      case '#0D1F23':
-      case '#132E35':
-      case '#2D4A59':
-        navbarTextColorPrimary.value = '#AFB3B7'
-        navbarTextColorSecondary.value = (bg === '#132E35' || bg === '#2D4A59') ? '#B58863' : '#5A636A'
-        break
-      case '#698180':
-      case '#AFB3B7':
-        navbarTextColorPrimary.value = '#132E35'
-        navbarTextColorSecondary.value = '#5A636A'
-        break
-      default:
-        navbarTextColorPrimary.value = '#AFB3B7'
-        navbarTextColorSecondary.value = '#5A636A'
-    }
-  }
-
-  const mobileMenuBgColor = computed(() =>
-    navbarBgColor.value === 'transparent' ? '#FFFFFF' : navbarBgColor.value
-  )
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-  handleScroll()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
-
-// Navbar linklerine tıklayınca yumuşak ve kontrollü scroll
-
-
-function scrollToSection(event, selector) {
-  event.preventDefault()
-
-  if (menuOpen.value) {
-    // Menü açıksa önce kapat
-    menuOpen.value = false
-
-    // Menü animasyonu tamamlanınca scroll yap
-    setTimeout(() => {
-      const element = document.querySelector(selector)
-      if (!element) return
-
-      const headerOffset = document.querySelector('header').offsetHeight
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-      const offsetPosition = elementPosition - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      })
-    }, 350) // menünün kapanma animasyon süresi kadar beklet
-  } else {
-    // Menü kapalıysa hemen scroll yap
-    const element = document.querySelector(selector)
-    if (!element) return
-
-    const headerOffset = document.querySelector('header').offsetHeight
-    const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-    const offsetPosition = elementPosition - headerOffset
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
-    })
-  }
-}
-
-
-const menuOpen = ref(false)
-
-// Zıt renk hesaplayıcı fonksiyon
-function getContrastColor(hexcolor) {
-
-  console.log(hexcolor)
-  hexcolor = hexcolor.replace('#', '');
-  if (hexcolor.length === 3) {
-    hexcolor = hexcolor.split('').map(c => c + c).join('');
-  }
-  const r = parseInt(hexcolor.substr(0, 2), 16);
-  const g = parseInt(hexcolor.substr(2, 2), 16);
-  const b = parseInt(hexcolor.substr(4, 2), 16);
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  return brightness > 125 ? '#000000' : '#FFFFFF';
-}
-
-const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.value))
 </script>
 
 <template>
   <main class="font-sans min-h-screen">
 
     <!-- Navbar -->
-    <header :style="{ backgroundColor: navbarBgColor }"
-      class="fixed top-0 left-0 w-full z-40 transition-colors duration-300">
-      <div class="max-w-6xl mx-auto flex justify-between items-center p-4 md:p-6">
-        <h1
-          class="text-xl md:text-2xl font-extrabold transition-colors duration-300 select-none cursor-pointer flex items-center gap-2"
-          :style="{ color: navbarTextColorComputed }">
-          <img src="/public/muğla döşeme.png" alt="Logo" class="h-9 md:h-12 object-contain" />
-          <a href="#top" @click="scrollToSection($event, '#top')" class="hover:opacity-80 transition">Yıldırım
-            Döşeme</a>
-        </h1>
-
-
-        <!-- Hamburger Button -->
-        <button @click="menuOpen = !menuOpen" class="md:hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            :style="{ color: navbarTextColorComputed }">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-
-        <!-- Desktop Menu -->
-        <nav class="hidden md:block">
-          <ul :style="{ color: navbarTextColorComputed }"
-            class="flex space-x-6 font-medium transition-colors duration-300">
-            <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda')"
-                class="hover:opacity-70 transition">Hakkımızda</a></li>
-            <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')"
-                class="hover:opacity-70 transition">Hizmetler</a></li>
-            <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
-                class="hover:opacity-70 transition">Projeler</a></li>
-            <!--
-                  <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
-                    class="hover:opacity-70 transition">Referanslar</a></li>
-                    <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
-                      class="hover:opacity-70 transition">Yorumlar</a></li>
-                      -->
-            <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
-                Sorulanlar</a></li>
-            <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
-                class="hover:opacity-70 transition">İletişim</a></li>
-          </ul>
-        </nav>
-      </div>
-
-      <!-- Mobile Menu -->
-      <nav v-if="menuOpen" class="md:hidden"
-        :style="{ backgroundColor: navbarBgColor === 'transparent' ? '#0D1F23' : navbarBgColor }">
-        <ul :style="{ color: navbarTextColorComputed }"
-          class="flex flex-col space-y-4 p-4 font-medium transition-colors duration-300">
-          <li><a href="#hakkimizda" @click="scrollToSection($event, '#hakkimizda')"
-              class="hover:opacity-70 transition">Hakkımızda</a></li>
-          <li><a href="#hizmetler" @click="scrollToSection($event, '#hizmetler')"
-              class="hover:opacity-70 transition">Hizmetler</a></li>
-          <li><a href="#projeler" @click="scrollToSection($event, '#projeler')"
-              class="hover:opacity-70 transition">Projeler</a></li>
-          <!--
-                <li><a href="#referanslar" @click="scrollToSection($event, '#referanslar')"
-                  class="hover:opacity-70 transition">Referanslar</a></li>
-                  <li><a href="#yorumlar" @click="scrollToSection($event, '#yorumlar')"
-                    class="hover:opacity-70 transition">Yorumlar</a></li>
-                    -->
-          <li><a href="#sss" @click="scrollToSection($event, '#sss')" class="hover:opacity-70 transition">Sık
-              Sorulanlar</a></li>
-          <li><a href="#iletisim" @click="scrollToSection($event, '#iletisim')"
-              class="hover:opacity-70 transition">İletişim</a></li>
-        </ul>
-      </nav>
-    </header>
+    <Navbar />
 
     <!-- hero -->
     <section id="top" class="relative pt-28 h-[110vh] bg-center bg-cover bg-no-repeat"
@@ -244,10 +53,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
       </div>
 
     </section>
-
-
-
-
 
     <!-- Hakkımızda -->
     <section id="hakkimizda" data-color="#0D1F23" class="flex flex-col justify-center items-center min-h-screen px-6 text-center bg-gradient-to-b from-[#0D1F23] to-[#162A2F] text-[#AFB3B7]
@@ -332,15 +137,22 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
           <div
             class="bg-[#132E35] text-[#B58863] rounded-full p-6 mb-8 flex items-center justify-center w-24 h-24 drop-shadow-xl flex-shrink-0 transition-colors duration-300 group-hover:bg-[#B58863] group-hover:text-[#132E35]"
             style="transform-origin:center center;">
-            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-              width="800px" height="800px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve"
-              fill="#ae835f" stroke="#ae835f" stroke-width="0.00032" preserveAspectRatio="xMidYMid meet">
-              <g transform="translate(0,-4)"> <!-- yukarı 2 birim kaydırdım, ihtiyaca göre değiştir -->
-                <path
-                  d="M29,18.18V15.34A3.35,3.35,0,0,0,25.66,12H18.34A3.34,3.34,0,0,0,16,13a3.34,3.34,0,0,0-2.34-1H6.34A3.35,3.35,0,0,0,3,15.34v2.84A3,3,0,0,0,1,21v7a1,1,0,0,0,1,1H3v1a1,1,0,0,0,2,0V29H27v1a1,1,0,0,0,2,0V29h1a1,1,0,0,0,1-1V21a3,3,0,0,0-2-2.82ZM18.34,14h7.32A1.34,1.34,0,0,1,27,15.34v2.83l-.07,0a2.86,2.86,0,0,0-.43.21l-.15.08a2.68,2.68,0,0,0-.49.4l-.09.12a2.88,2.88,0,0,0-.3.39l-.11.19a2.2,2.2,0,0,0-.17.39.61.61,0,0,0-.05.12h-.08a2.39,2.39,0,0,0-.66-.1H17V15.34A1.34,1.34,0,0,1,18.34,14ZM7,22.6a.6.6,0,0,1,.6-.6H15v1H7ZM17,22h7.4a.6.6,0,0,1,.6.6V23H17ZM5,15.34A1.34,1.34,0,0,1,6.34,14h7.32A1.34,1.34,0,0,1,15,15.34V20H7.6a2.84,2.84,0,0,0-.66.09l-.07,0s0-.07,0-.11a3.89,3.89,0,0,0-.19-.42l-.09-.17a2.93,2.93,0,0,0-.41-.52,2.74,2.74,0,0,0-.5-.4s-.12-.06-.17-.1a3.49,3.49,0,0,0-.39-.19l-.07,0ZM3,21a1,1,0,0,1,1-1,1,1,0,0,1,.71.31A.93.93,0,0,1,5,21v6H3Zm4,4H25v2H7Zm22,2H27V21a1,1,0,0,1,1-1,1,1,0,0,1,.71.31A.93.93,0,0,1,29,21Z" />
-              </g>
-            </svg>
 
+
+            <svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#ae835f">
+
+              <g id="SVGRepo_bgCarrier" stroke-width="0" />
+
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+
+              <g id="SVGRepo_iconCarrier">
+
+                <path fill="#ae835f"
+                  d="M256 15.99c-8.8 0-16 14.33-16 32 0 8.47 1.7 16.59 4.7 22.57-4.7.21-9 1.16-13.7 2.43v15.85c17.1-2.42 34.1-2.31 50 0V72.99c-4.5-1.35-9.4-2.11-13.7-2.43 3-5.98 4.7-14.1 4.7-22.57 0-17.67-7.2-32-16-32zM86.23 86.28c-6.25 6.25-1.19 21.42 11.3 33.92 6.07 6 12.97 10.6 19.37 12.7-3.2 3.5-5.6 7.2-8 11.4l11.3 11.2c9.9-13.4 21.9-25.4 35.3-35.3l-11.2-11.3c-4.2 2.2-8 5.2-11.4 8-2.1-6.4-6.7-13.3-12.7-19.3-8-6.21-24.55-20.4-33.97-11.32zm305.57 11.3c-6 6.02-10.6 12.92-12.7 19.32-3.5-3.2-7.2-5.6-11.4-8l-11.2 11.3c13.4 9.9 25.4 21.9 35.3 35.3l11.3-11.2c-2.2-4.2-5.2-8-8-11.4 6.3-2.2 13.2-6.7 19.2-12.7 12.5-12.5 17.6-27.69 11.3-33.93-9.9-7.87-28 5.62-33.8 11.31zm-142.3 7.52c-36.8 1.6-70.2 16.3-95.6 39.6-3.3 3.1-6.6 6.3-9.2 9.2-23.3 25.4-38 58.8-39.6 95.7 0 4.5-.2 9.1.1 13 1.5 36.8 16.2 70.2 39.5 95.6 3.1 3.2 6.4 6.5 9.2 9.2 25.4 23.2 58.8 37.9 95.6 39.5h.2c4.1.2 8.7 0 12.8 0 36.8-1.6 70.2-16.3 95.6-39.6 3.3-3.1 6.6-6.3 9.2-9.2 23.3-25.4 38-58.8 39.6-95.6v-.2c.2-4.2 0-8.7 0-12.8-1.6-36.8-16.3-70.2-39.6-95.6-3.1-3.3-6.3-6.6-9.2-9.2-25.4-23.3-58.8-38-95.6-39.6-4.5-.2-9.1 0-13 0zm6.5 10.7c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm6.9 28.4c25.7 1.6 49.1 11.8 67.3 27.9 3.4 3.1 6.7 6.3 9.7 9.7 16.1 18.2 26.3 41.6 27.9 67.4.4 4.6 0 9.2 0 13.7-1.6 25.7-11.8 49.1-27.9 67.3-3.1 3.4-6.3 6.7-9.7 9.7-18.2 16.1-41.6 26.3-67.4 27.9-4.6.1-9.2.4-13.7 0-25.7-1.6-49.1-11.8-67.2-27.9h-.1c-3.4-3-6.6-6.3-9.6-9.7-16.1-18.1-26.4-41.5-28-67.3-.1-4.6-.4-9.1 0-13.6.5-25.8 13.3-50.5 27.9-67.5 3.1-3.4 6.3-6.7 9.7-9.7 18.2-16.1 41.6-26.3 67.4-27.9 4.6-.4 9.2 0 13.7 0zm-94.8 12.6c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zm187.1 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zM240 163.3v8.7c2.5 3.2 4.4 5.5 7.8 6.8-.7 12.4-1.6 25.1-2.8 37.7 7.4-1.9 15.2-2 22.1.1-1.2-12.7-2.2-25.4-2.9-37.9 7.9-2.1 7.8-8.6 7.8-15.4-11-1.7-21.8-1.6-32 0zm-38.3 15.8c-8.7 6.2-16.4 13.9-22.6 22.6l6.2 6.2c4 .5 7 .8 10.3-.7 8.3 9.3 16.6 18.9 24.7 28.7 3.7-6.5 9.1-11.9 15.7-15.6-9.9-8.1-19.5-16.4-28.8-24.7 1.8-3.1 1.3-6.7.7-10.3zm108.6 0l-6.2 6.2c-.7 4-.8 6.9.6 10.3-9.2 8.3-18.9 16.6-28.7 24.7 6.5 3.7 11.9 9.1 15.6 15.7 8.1-9.9 16.5-19.5 24.7-28.8 3.2 1.7 6.7 1.3 10.3.7l6.2-6.2c-6.2-8.7-13.8-16.4-22.5-22.6zM423.1 231c2.5 17.1 2.3 34.1 0 50H439c1.5-4.5 2-9.4 2.3-13.7 6 3 14.2 4.7 22.7 4.7 17.7 0 32-7.2 32-16s-14.3-16-32-16c-8.5 0-16.7 1.7-22.7 4.7-.1-4.7-1-9-2.3-13.7zm-350.07.1c-1.35 4.5-2.11 9.2-2.4 13.6-6.02-3-14.15-4.6-22.6-4.6-17.67 0-32 7.2-32 16s14.33 16 32 16c8.48 0 16.61-1.7 22.6-4.7.15 4.7 1.12 9 2.4 13.7h15.8c-2.38-17.1-2.5-34.1 0-50zM256 233c-12.9 0-23 10.2-23 23s10.1 23 23 23c12.8 0 23-10.2 23-23s-10.2-23-23-23zm84 7c-3.2 2.5-5.5 4.4-6.8 7.8-12.4-.7-25.1-1.6-37.7-2.8 1.9 7.5 1.9 15.2 0 22.1 12.6-1.2 25.2-2.2 37.7-2.9 1 3.5 3.8 5.7 6.8 7.8h8.7c1.7-11 1.6-21.8 0-32zm-176.7.1c-1.7 10.9-1.5 21.8 0 32h8.7c3.1-2.5 5.6-4.3 6.7-7.8 12.5.6 25.1 1.6 37.8 2.8-2-7.5-2-15.2-.1-22.1-12.6 1.2-25.3 2.1-37.7 2.8-.9-3.5-3.8-5.7-6.7-7.7zm224.9 7.9c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-264.4.1c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm167.9 28c-3.7 6.5-9.1 11.9-15.7 15.6 9.9 8.1 19.5 16.4 28.8 24.7-1.8 3.1-1.3 6.7-.7 10.3l6.2 6.2c8.7-6.2 16.4-13.9 22.6-22.6l-6.2-6.2c-4-.5-7-.8-10.3.7-8.3-9.3-16.6-18.9-24.7-28.7zm-71.4 0c-8.1 9.8-16.4 19.4-24.7 28.7-3.1-1.8-6.7-1.3-10.2-.7l-6.3 6.2c6.2 8.8 13.9 16.5 22.7 22.6l6.2-6.2c.5-4 .8-7-.7-10.3 9.3-8.3 18.9-16.6 28.7-24.7-6.5-3.7-12-9.1-15.7-15.6zm24.6 19.3c1.2 12.7 2.2 25.4 2.9 37.9-3.5.8-5.8 3.8-7.8 6.7v8.7c11 1.7 21.8 1.6 32 0V340c-2.5-3.2-4.4-5.5-7.8-6.8.7-12.4 1.6-25.1 2.8-37.7-7.7 1.3-15.8 1.7-22.1-.1zm-76.7 48.5c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.2-3 11.3 0zm187 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.3-3 11.3 0zm36.6 12.6c-9.9 13.4-21.9 25.4-35.3 35.3l11.2 11.3c4.2-2.2 8-5.2 11.4-8 2.1 6.4 6.7 13.3 12.7 19.3 12.5 12.5 27.6 17.5 33.9 11.3 6.2-6.3 1.2-21.4-11.3-33.9-6-6-12.9-10.6-19.3-12.7 3.2-3.5 5.6-7.2 8-11.4zm-271.6 0L109 367.7c2.3 4.1 5.1 8.2 8 11.4-6.4 2.1-13.3 6.7-19.37 12.7-12.47 12.5-17.52 27.6-11.3 33.9 6.24 6.3 21.47 1.2 33.97-11.3 6-6 10.6-12.9 12.7-19.3 3.5 3.2 7.2 5.6 11.4 8l11.2-11.2c-13.5-10-25.4-21.9-35.4-35.4zM256 380.2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-25 43V439c4.5 1.4 9.4 2.1 13.7 2.4-3 6-4.7 14.1-4.7 22.6 0 17.7 7.2 32 16 32s16-14.3 16-32c0-8.5-1.7-16.6-4.7-22.6 4.7-.2 9-1.1 13.7-2.4v-15.9c-17.1 2.5-34.1 2.4-50 .1z" />
+
+              </g>
+
+            </svg>
 
 
           </div>
@@ -415,20 +227,15 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
           <div
             class="bg-[#132E35] text-[#B58863] rounded-full p-6 mb-8 flex items-center justify-center w-24 h-24 drop-shadow-xl flex-shrink-0 transition-colors duration-300 group-hover:bg-[#B58863] group-hover:text-[#132E35]"
             style="transform-origin:center center;">
-            <svg width="800px" height="800px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#ae835f">
-
-              <g id="SVGRepo_bgCarrier" stroke-width="0" />
-
-              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-
-              <g id="SVGRepo_iconCarrier">
-
-                <path fill="#ae835f"
-                  d="M256 15.99c-8.8 0-16 14.33-16 32 0 8.47 1.7 16.59 4.7 22.57-4.7.21-9 1.16-13.7 2.43v15.85c17.1-2.42 34.1-2.31 50 0V72.99c-4.5-1.35-9.4-2.11-13.7-2.43 3-5.98 4.7-14.1 4.7-22.57 0-17.67-7.2-32-16-32zM86.23 86.28c-6.25 6.25-1.19 21.42 11.3 33.92 6.07 6 12.97 10.6 19.37 12.7-3.2 3.5-5.6 7.2-8 11.4l11.3 11.2c9.9-13.4 21.9-25.4 35.3-35.3l-11.2-11.3c-4.2 2.2-8 5.2-11.4 8-2.1-6.4-6.7-13.3-12.7-19.3-8-6.21-24.55-20.4-33.97-11.32zm305.57 11.3c-6 6.02-10.6 12.92-12.7 19.32-3.5-3.2-7.2-5.6-11.4-8l-11.2 11.3c13.4 9.9 25.4 21.9 35.3 35.3l11.3-11.2c-2.2-4.2-5.2-8-8-11.4 6.3-2.2 13.2-6.7 19.2-12.7 12.5-12.5 17.6-27.69 11.3-33.93-9.9-7.87-28 5.62-33.8 11.31zm-142.3 7.52c-36.8 1.6-70.2 16.3-95.6 39.6-3.3 3.1-6.6 6.3-9.2 9.2-23.3 25.4-38 58.8-39.6 95.7 0 4.5-.2 9.1.1 13 1.5 36.8 16.2 70.2 39.5 95.6 3.1 3.2 6.4 6.5 9.2 9.2 25.4 23.2 58.8 37.9 95.6 39.5h.2c4.1.2 8.7 0 12.8 0 36.8-1.6 70.2-16.3 95.6-39.6 3.3-3.1 6.6-6.3 9.2-9.2 23.3-25.4 38-58.8 39.6-95.6v-.2c.2-4.2 0-8.7 0-12.8-1.6-36.8-16.3-70.2-39.6-95.6-3.1-3.3-6.3-6.6-9.2-9.2-25.4-23.3-58.8-38-95.6-39.6-4.5-.2-9.1 0-13 0zm6.5 10.7c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm6.9 28.4c25.7 1.6 49.1 11.8 67.3 27.9 3.4 3.1 6.7 6.3 9.7 9.7 16.1 18.2 26.3 41.6 27.9 67.4.4 4.6 0 9.2 0 13.7-1.6 25.7-11.8 49.1-27.9 67.3-3.1 3.4-6.3 6.7-9.7 9.7-18.2 16.1-41.6 26.3-67.4 27.9-4.6.1-9.2.4-13.7 0-25.7-1.6-49.1-11.8-67.2-27.9h-.1c-3.4-3-6.6-6.3-9.6-9.7-16.1-18.1-26.4-41.5-28-67.3-.1-4.6-.4-9.1 0-13.6.5-25.8 13.3-50.5 27.9-67.5 3.1-3.4 6.3-6.7 9.7-9.7 18.2-16.1 41.6-26.3 67.4-27.9 4.6-.4 9.2 0 13.7 0zm-94.8 12.6c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zm187.1 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-2.9 8.2-2.9 11.3 0zM240 163.3v8.7c2.5 3.2 4.4 5.5 7.8 6.8-.7 12.4-1.6 25.1-2.8 37.7 7.4-1.9 15.2-2 22.1.1-1.2-12.7-2.2-25.4-2.9-37.9 7.9-2.1 7.8-8.6 7.8-15.4-11-1.7-21.8-1.6-32 0zm-38.3 15.8c-8.7 6.2-16.4 13.9-22.6 22.6l6.2 6.2c4 .5 7 .8 10.3-.7 8.3 9.3 16.6 18.9 24.7 28.7 3.7-6.5 9.1-11.9 15.7-15.6-9.9-8.1-19.5-16.4-28.8-24.7 1.8-3.1 1.3-6.7.7-10.3zm108.6 0l-6.2 6.2c-.7 4-.8 6.9.6 10.3-9.2 8.3-18.9 16.6-28.7 24.7 6.5 3.7 11.9 9.1 15.6 15.7 8.1-9.9 16.5-19.5 24.7-28.8 3.2 1.7 6.7 1.3 10.3.7l6.2-6.2c-6.2-8.7-13.8-16.4-22.5-22.6zM423.1 231c2.5 17.1 2.3 34.1 0 50H439c1.5-4.5 2-9.4 2.3-13.7 6 3 14.2 4.7 22.7 4.7 17.7 0 32-7.2 32-16s-14.3-16-32-16c-8.5 0-16.7 1.7-22.7 4.7-.1-4.7-1-9-2.3-13.7zm-350.07.1c-1.35 4.5-2.11 9.2-2.4 13.6-6.02-3-14.15-4.6-22.6-4.6-17.67 0-32 7.2-32 16s14.33 16 32 16c8.48 0 16.61-1.7 22.6-4.7.15 4.7 1.12 9 2.4 13.7h15.8c-2.38-17.1-2.5-34.1 0-50zM256 233c-12.9 0-23 10.2-23 23s10.1 23 23 23c12.8 0 23-10.2 23-23s-10.2-23-23-23zm84 7c-3.2 2.5-5.5 4.4-6.8 7.8-12.4-.7-25.1-1.6-37.7-2.8 1.9 7.5 1.9 15.2 0 22.1 12.6-1.2 25.2-2.2 37.7-2.9 1 3.5 3.8 5.7 6.8 7.8h8.7c1.7-11 1.6-21.8 0-32zm-176.7.1c-1.7 10.9-1.5 21.8 0 32h8.7c3.1-2.5 5.6-4.3 6.7-7.8 12.5.6 25.1 1.6 37.8 2.8-2-7.5-2-15.2-.1-22.1-12.6 1.2-25.3 2.1-37.7 2.8-.9-3.5-3.8-5.7-6.7-7.7zm224.9 7.9c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-264.4.1c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm167.9 28c-3.7 6.5-9.1 11.9-15.7 15.6 9.9 8.1 19.5 16.4 28.8 24.7-1.8 3.1-1.3 6.7-.7 10.3l6.2 6.2c8.7-6.2 16.4-13.9 22.6-22.6l-6.2-6.2c-4-.5-7-.8-10.3.7-8.3-9.3-16.6-18.9-24.7-28.7zm-71.4 0c-8.1 9.8-16.4 19.4-24.7 28.7-3.1-1.8-6.7-1.3-10.2-.7l-6.3 6.2c6.2 8.8 13.9 16.5 22.7 22.6l6.2-6.2c.5-4 .8-7-.7-10.3 9.3-8.3 18.9-16.6 28.7-24.7-6.5-3.7-12-9.1-15.7-15.6zm24.6 19.3c1.2 12.7 2.2 25.4 2.9 37.9-3.5.8-5.8 3.8-7.8 6.7v8.7c11 1.7 21.8 1.6 32 0V340c-2.5-3.2-4.4-5.5-7.8-6.8.7-12.4 1.6-25.1 2.8-37.7-7.7 1.3-15.8 1.7-22.1-.1zm-76.7 48.5c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.2-3 11.3 0zm187 0c3.1 3.1 3.1 8.2 0 11.3-3.1 3.1-8.2 3.1-11.3 0-3.1-3.1-3.1-8.2 0-11.3 3.5-3 8.3-3 11.3 0zm36.6 12.6c-9.9 13.4-21.9 25.4-35.3 35.3l11.2 11.3c4.2-2.2 8-5.2 11.4-8 2.1 6.4 6.7 13.3 12.7 19.3 12.5 12.5 27.6 17.5 33.9 11.3 6.2-6.3 1.2-21.4-11.3-33.9-6-6-12.9-10.6-19.3-12.7 3.2-3.5 5.6-7.2 8-11.4zm-271.6 0L109 367.7c2.3 4.1 5.1 8.2 8 11.4-6.4 2.1-13.3 6.7-19.37 12.7-12.47 12.5-17.52 27.6-11.3 33.9 6.24 6.3 21.47 1.2 33.97-11.3 6-6 10.6-12.9 12.7-19.3 3.5 3.2 7.2 5.6 11.4 8l11.2-11.2c-13.5-10-25.4-21.9-35.4-35.4zM256 380.2c4.4 0 8 3.6 8 8s-3.6 8-8 8-8-3.6-8-8 3.6-8 8-8zm-25 43V439c4.5 1.4 9.4 2.1 13.7 2.4-3 6-4.7 14.1-4.7 22.6 0 17.7 7.2 32 16 32s16-14.3 16-32c0-8.5-1.7-16.6-4.7-22.6 4.7-.2 9-1.1 13.7-2.4v-15.9c-17.1 2.5-34.1 2.4-50 .1z" />
-
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+              width="800px" height="800px" viewBox="0 0 32 32" enable-background="new 0 0 32 32" xml:space="preserve"
+              fill="#ae835f" stroke="#ae835f" stroke-width="0.00032" preserveAspectRatio="xMidYMid meet">
+              <g transform="translate(0,-4)"> <!-- yukarı 2 birim kaydırdım, ihtiyaca göre değiştir -->
+                <path
+                  d="M29,18.18V15.34A3.35,3.35,0,0,0,25.66,12H18.34A3.34,3.34,0,0,0,16,13a3.34,3.34,0,0,0-2.34-1H6.34A3.35,3.35,0,0,0,3,15.34v2.84A3,3,0,0,0,1,21v7a1,1,0,0,0,1,1H3v1a1,1,0,0,0,2,0V29H27v1a1,1,0,0,0,2,0V29h1a1,1,0,0,0,1-1V21a3,3,0,0,0-2-2.82ZM18.34,14h7.32A1.34,1.34,0,0,1,27,15.34v2.83l-.07,0a2.86,2.86,0,0,0-.43.21l-.15.08a2.68,2.68,0,0,0-.49.4l-.09.12a2.88,2.88,0,0,0-.3.39l-.11.19a2.2,2.2,0,0,0-.17.39.61.61,0,0,0-.05.12h-.08a2.39,2.39,0,0,0-.66-.1H17V15.34A1.34,1.34,0,0,1,18.34,14ZM7,22.6a.6.6,0,0,1,.6-.6H15v1H7ZM17,22h7.4a.6.6,0,0,1,.6.6V23H17ZM5,15.34A1.34,1.34,0,0,1,6.34,14h7.32A1.34,1.34,0,0,1,15,15.34V20H7.6a2.84,2.84,0,0,0-.66.09l-.07,0s0-.07,0-.11a3.89,3.89,0,0,0-.19-.42l-.09-.17a2.93,2.93,0,0,0-.41-.52,2.74,2.74,0,0,0-.5-.4s-.12-.06-.17-.1a3.49,3.49,0,0,0-.39-.19l-.07,0ZM3,21a1,1,0,0,1,1-1,1,1,0,0,1,.71.31A.93.93,0,0,1,5,21v6H3Zm4,4H25v2H7Zm22,2H27V21a1,1,0,0,1,1-1,1,1,0,0,1,.71.31A.93.93,0,0,1,29,21Z" />
               </g>
-
             </svg>
+
 
           </div>
           <h4
@@ -449,60 +256,8 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
       </div>
     </section>
 
-    <section id="projeler" data-color="#132E35"
-      class="bg-[#132E35] text-[#AFB3B7] min-h-screen py-24 px-6 flex flex-col justify-center items-center">
-
-      <h3 class="text-4xl md:text-5xl font-extrabold mb-10 select-none text-center text-[#B58863]">
-        Projelerimiz
-        <span class="block w-20 h-[3px] bg-[#B58863] mx-auto mt-4 rounded-full"></span>
-      </h3>
-
-      <div class="max-w-3xl space-y-5 text-center text-base md:text-lg leading-relaxed mb-12">
-        <p>
-          Projelerimizde müşteri memnuniyetini ön planda tutarak mekanlarınıza estetik ve işlevsellik katıyoruz.
-          Her projeyi kaliteli malzeme ve usta işçilikle tamamlayarak, uzun ömürlü çözümler sunuyoruz.
-        </p>
-        <p>
-          Tasarım, üretim ve uygulama aşamalarımızda şeffaf iletişim ve zamanında teslim prensipleriyle ilerliyor,
-          beklentilerinizi eksiksiz karşılamak için titizlikle çalışıyoruz.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full">
-        <div class="bg-[#132E35]/80 rounded-2xl p-6 md:p-8 shadow-xl border border-[#1f3b43] backdrop-blur-sm
-             transition duration-500 ease-in-out
-             hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]">
-          <div class="absolute inset-0 rounded-2xl border border-[#B58863]/20 pointer-events-none"></div>
-          <h4 class="text-lg font-semibold mb-2 text-[#B58863]">Planlama</h4>
-          <p class="text-sm">
-            Müşteri beklentilerini dikkatle analiz ederek en uygun çözümleri planlar, projenizin her adımını şeffaf bir
-            şekilde paylaşırız.
-          </p>
-        </div>
-
-        <div class="bg-[#132E35]/80 rounded-2xl p-6 md:p-8 shadow-xl border border-[#1f3b43] backdrop-blur-sm
-             transition duration-500 ease-in-out
-             hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]">
-          <div class="absolute inset-0 rounded-2xl border border-[#B58863]/20 pointer-events-none"></div>
-          <h4 class="text-lg font-semibold mb-2 text-[#B58863]">Uygulama</h4>
-          <p class="text-sm">
-            Kaliteli malzeme ve usta işçilikle, projenizi estetik ve fonksiyonel bir şekilde hayata geçirerek uzun
-            ömürlü çözümler sunarız.
-          </p>
-        </div>
-
-        <div class="bg-[#132E35]/80 rounded-2xl p-6 md:p-8 shadow-xl border border-[#1f3b43] backdrop-blur-sm
-             transition duration-500 ease-in-out
-             hover:-translate-y-2 hover:border-[#B58863] hover:shadow-[0_0_15px_3px_rgba(181,136,99,0.6)]">
-          <div class="absolute inset-0 rounded-2xl border border-[#B58863]/20 pointer-events-none"></div>
-          <h4 class="text-lg font-semibold mb-2 text-[#B58863]">Teslimat</h4>
-          <p class="text-sm">
-            Projeyi belirlenen sürede eksiksiz tamamlayarak, kullanımınıza hazır bir şekilde teslim eder ve
-            memnuniyetinizi garanti altına alırız.
-          </p>
-        </div>
-      </div>
-    </section>
+    <!-- Galeri -->
+    <Gallery />
 
     <!-- Sıkça Sorulan Sorular -->
     <section id="sss" data-color="#698180"
@@ -523,7 +278,6 @@ const navbarTextColorComputed = computed(() => getContrastColor(navbarBgColor.va
         </div>
       </div>
     </section>
-
 
     <!-- İletişim -->
     <section id="iletisim" data-color="#0D1F23"
