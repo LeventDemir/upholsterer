@@ -29,7 +29,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <section id="projeler" data-color="#132E35" class="bg-[#132E35] min-h-screen py-24 px-6 flex flex-col items-center">
+    <section id="galeri" data-color="#132E35" class="bg-[#132E35] min-h-screen py-24 px-6 flex flex-col items-center">
         <!-- Galeri Başlığı -->
         <h2 class="text-5xl md:text-6xl font-extrabold mb-12 text-[#B58863] select-none text-center">
             Galeri

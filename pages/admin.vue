@@ -3,7 +3,7 @@
 
     <Navbar />
     
-    <section class="bg-[#0D1F23] min-h-screen flex flex-col items-center justify-start py-12 px-4 sm:px-8">
+    <section class="bg-[#0D1F23] min-h-screen flex flex-col items-center justify-start py-12 px-4 sm:px-8 pt-36 sm:pt-60">
 
       <h1 class="text-3xl sm:text-4xl font-bold mb-8 text-center text-white">📸 Resim Yükleme Paneli</h1>
 
@@ -160,6 +160,11 @@ async function deletePhoto(id) {
     showMessage('❌ Fotoğraf silinirken hata oluştu.', 'error')
   }
 }
+
+definePageMeta({
+  middleware: ["auth"]
+  // or middleware: 'auth'
+})
 </script>
 
 <style scoped>

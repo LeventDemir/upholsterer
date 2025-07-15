@@ -4,10 +4,10 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', 'nuxt-mongoose'],
   runtimeConfig: {
-    mongodbUri: process.env.MONGODB_URI
+    mongodbUri: 'mongodb+srv://lukafencel:lukafencel@cluster0.ikg5vew.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
   },
   mongoose: {
-    uri: process.env.MONGODB_URI
+    uri: 'mongodb+srv://lukafencel:lukafencel@cluster0.ikg5vew.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
   },
   routeRules: {
     '/api/*': {},
