@@ -200,7 +200,7 @@ async function logout() {
         <button @click="handleLink('galeri')" :style="{ color: navbarTextColorComputed }"
           class="hover:text-gray-300 transition">Galeri</button>
         <button @click="handleLink('sss')" :style="{ color: navbarTextColorComputed }"
-          class="hover:text-gray-300 transition">SSS</button>
+          class="hover:text-gray-300 transition">Sık Sorulanlar</button>
         <button @click="handleLink('iletisim')" :style="{ color: navbarTextColorComputed }"
           class="hover:text-gray-300 transition">İletişim</button>
 
@@ -225,7 +225,7 @@ async function logout() {
         <li><button @click="handleLink('hizmetler')" class="text-left hover:text-gray-300 transition">Hizmetler</button>
         </li>
         <li><button @click="handleLink('galeri')" class="text-left hover:text-gray-300 transition">Galeri</button></li>
-        <li><button @click="handleLink('sss')" class="text-left hover:text-gray-300 transition">SSS</button></li>
+        <li><button @click="handleLink('sss')" class="text-left hover:text-gray-300 transition">Sık Sorulanlar</button></li>
         <li><button @click="handleLink('iletisim')" class="text-left hover:text-gray-300 transition">İletişim</button>
         </li>
         <li v-if="user"><a href="/admin" class="text-left hover:text-gray-300 transition">Admin</a></li>
